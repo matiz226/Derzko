@@ -1,1409 +1,977 @@
 <!DOCTYPE html>
 <html lang="ru" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DERZKO — Event-агентство в Санкт-Петербурге | Организация событий под ключ</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & Cormorant Garamond for expressive contrast -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DERZKO — Event-агентство в Санкт-Петербурге</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0A0A0A',
+            card: '#131315',
+            cardHover: '#1A1A1D',
+            burgundy: '#8B1E2F',
+            burgundyLight: '#B8293F',
+            burgundyDark: '#59111C',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Manrope"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        obsidian: '#0A0A0A',
-                        surface: '#121214',
-                        surfaceLight: '#18181C',
-                        burgundy: {
-                            DEFAULT: '#800020',
-                            hover: '#9B1B30',
-                            glow: '#B82543',
-                            deep: '#4A0012'
-                        },
-                        muted: '#A0A0A8'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Cormorant Garamond', 'serif']
-                    },
-                    boxShadow: {
-                        'burgundy-glow': '0 0 35px -5px rgba(155, 27, 48, 0.45)',
-                        'burgundy-subtle': '0 0 25px -8px rgba(184, 37, 67, 0.25)'
-                    }
-                }
-            }
-        }
-    </script>
+  <style>
+    body {
+      background-color: #0A0A0A;
+      color: #FFFFFF;
+      font-family: 'Manrope', sans-serif;
+      overflow-x: hidden;
+    }
 
-    <style>
-        body {
-            background-color: #0A0A0A;
-            color: #FFFFFF;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
+    .font-editorial {
+      font-family: 'Cormorant Garamond', serif;
+    }
 
-        /* Subtle Ambient Radial Gradients */
-        .ambient-hero {
-            background: 
-                radial-gradient(circle at 80% 20%, rgba(128, 0, 32, 0.28) 0%, rgba(10, 10, 10, 0) 45%),
-                radial-gradient(circle at 20% 80%, rgba(155, 27, 48, 0.18) 0%, rgba(10, 10, 10, 0) 50%);
-        }
+    /* Эффект матового стекла */
+    .glass-panel {
+      background: rgba(19, 19, 21, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .ambient-card {
-            background: linear-gradient(145deg, rgba(24, 24, 28, 0.9) 0%, rgba(16, 16, 18, 0.95) 100%);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    .glass-burgundy {
+      background: rgba(139, 30, 47, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
 
-        .ambient-card:hover {
-            border-color: rgba(184, 37, 67, 0.6);
-            box-shadow: 0 12px 35px -10px rgba(128, 0, 32, 0.35);
-            transform: translateY(-3px);
-        }
+    /* Гигантский текст на фоне Hero */
+    .hero-giant-text {
+      font-size: clamp(4.8rem, 19vw, 17rem);
+      line-height: 0.82;
+      letter-spacing: 0.04em;
+      background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.08) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+    }
 
-        /* Custom Range Slider */
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        }
-        input[type=range]:focus {
-            outline: none;
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 6px;
-            cursor: pointer;
-            background: #27272C;
-            border-radius: 999px;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            height: 22px;
-            width: 22px;
-            border-radius: 50%;
-            background: #B82543;
-            border: 3px solid #FFFFFF;
-            cursor: pointer;
-            -webkit-appearance: none;
-            margin-top: -8px;
-            box-shadow: 0 0 15px rgba(184, 37, 67, 0.8);
-            transition: transform 0.15s ease;
-        }
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.15);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0A0A0A;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #26262B;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #800020;
-        }
-
-        /* Donut Chart Animation */
-        .donut-segment {
-            transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-    </style>
+    /* Стилизация ползунка калькулятора */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #262629;
+      height: 6px;
+      border-radius: 999px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: #8B1E2F;
+      border: 3px solid #FFFFFF;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(139, 30, 47, 0.9);
+    }
+  </style>
 </head>
-<body class="antialiased selection:bg-burgundy selection:text-white">
+<body class="p-2 sm:p-4 md:p-6 max-w-[1440px] mx-auto selection:bg-burgundy selection:text-white">
 
-    <!-- ================= HEADER (Sticky Glassmorphic) ================= -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-obsidian/80 backdrop-blur-xl border-b border-white/10 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#top" class="flex items-center gap-3 group">
-                <span class="text-2xl font-extrabold tracking-widest text-white group-hover:text-burgundy-glow transition-colors">
-                    DERZKO
-                </span>
-                <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-white/5 text-muted border border-white/10">
-                    Санкт-Петербург
-                </span>
+  <!-- ================= БЛОК 1: HERO FRAME (КАК НА РЕФЕРЕНСЕ AAKRITI) ================= -->
+  <header id="top" class="relative w-full min-h-[88vh] lg:min-h-[92vh] rounded-[28px] sm:rounded-[36px] overflow-hidden border border-white/15 flex flex-col justify-between p-4 sm:p-8 lg:p-10 shadow-2xl">
+    
+    <!-- Фоновое изображение с затемнением -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=85" 
+           alt="Атмосфера мероприятий Derzko" 
+           class="w-full h-full object-cover object-center scale-105 transition-transform duration-1000">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/90"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(139,30,47,0.35),transparent_55%)]"></div>
+    </div>
+
+    <!-- ВЕРХНЯЯ НАВИГАЦИЯ (КАПСУЛЬНАЯ) -->
+    <nav class="relative z-20 flex items-center justify-between gap-4">
+      <!-- Логотип -->
+      <a href="#top" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-burgundy/90 border border-white/20 flex items-center justify-center font-editorial text-2xl font-bold tracking-wider">
+          D
+        </div>
+        <div>
+          <span class="block text-lg font-bold tracking-[0.22em] uppercase leading-none">DERZKO</span>
+          <span class="block text-[10px] text-white/60 tracking-[0.18em] uppercase mt-1">Event Agency • SPB</span>
+        </div>
+      </a>
+
+      <!-- Центральное меню-пилюля -->
+      <div class="hidden lg:flex items-center gap-1 glass-panel px-2 py-1.5 rounded-full text-xs font-medium">
+        <a href="#top" class="px-4 py-2 rounded-full bg-white text-black font-semibold transition">Главная</a>
+        <a href="#trust" class="px-4 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition">О нас</a>
+        <a href="#formats" class="px-4 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition">Форматы</a>
+        <a href="#calculator" class="px-4 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition">Прозрачная смета</a>
+        <a href="#cases" class="px-4 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition">Кейсы</a>
+        <a href="#process" class="px-4 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition">Этапы</a>
+      </div>
+
+      <!-- Правая кнопка CTA + Иконки -->
+      <div class="flex items-center gap-2.5">
+        <a href="#contact" class="flex items-center gap-2.5 bg-white text-black pl-4 pr-1.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold hover:bg-burgundy hover:text-white transition group">
+          <span>Обсудить событие</span>
+          <span class="w-7 h-7 rounded-full bg-black text-white group-hover:bg-white group-hover:text-burgundy flex items-center justify-center transition">
+            ↗
+          </span>
+        </a>
+        <a href="https://t.me/" target="_blank" title="Написать в Telegram" class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/80 hover:text-white hover:border-burgundyLight transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ЦЕНТРАЛЬНЫЙ ГИГАНТСКИЙ ЗАГОЛОВОК (КАК В РЕФЕРЕНСЕ) -->
+    <div class="relative z-10 my-auto pt-8 pb-4">
+      <h1 class="hero-giant-text font-bold uppercase text-center tracking-tight">
+        DERZKO
+      </h1>
+      <p class="text-xs sm:text-sm md:text-base tracking-[0.38em] uppercase text-white/80 font-medium text-center sm:text-left sm:pl-4 -mt-2 sm:-mt-4">
+        Свадьбы • Корпоративы • Форумы • Фестивали
+      </p>
+    </div>
+
+    <!-- НИЖНЯЯ ЧАСТЬ HERO: СЛЕВА ОФФЕР, ПО ЦЕНТРУ ПИЛЮЛЯ CTA, СПРАВА 3 КАРТОЧКИ ФАКТОВ -->
+    <div class="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-6 items-end pt-6">
+      
+      <!-- Левый блок: душевный оффер -->
+      <div class="lg:col-span-5 space-y-3">
+        <h2 class="font-editorial text-3xl sm:text-4xl md:text-5xl font-medium leading-[1.1]">
+          Derzko в идеях.<br>
+          <span class="italic text-white/90">Бережно к вам и бюджету.</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-white/75 max-w-md leading-relaxed">
+          Организуем события под ключ в Санкт-Петербурге и ЛО, где вы — главный гость, а не координатор. С открытой сметой без скрытых комиссий и точным соблюдением сроков по договору.
+        </p>
+        <div class="pt-2 flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-white/60">
+          <span>САНКТ-ПЕТЕРБУРГ</span>
+          <span class="w-12 h-[1px] bg-burgundyLight"></span>
+          <span>ДОГОВОР SLA</span>
+        </div>
+      </div>
+
+      <!-- Центральная кнопка-капсула (как "View Projects" на референсе) -->
+      <div class="lg:col-span-4 flex lg:justify-center">
+        <a href="#calculator" class="inline-flex items-center gap-4 bg-white text-black pl-6 pr-2 py-2 rounded-full font-semibold text-sm shadow-xl hover:bg-burgundy hover:text-white transition-all duration-300 group">
+          <span>Рассчитать смету</span>
+          <span class="w-10 h-10 rounded-full bg-obsidian text-white group-hover:bg-white group-hover:text-burgundy flex items-center justify-center transition">
+            →
+          </span>
+        </a>
+      </div>
+
+      <!-- Правый стек из 3 стеклянных карточек (1-в-1 как на референсе) -->
+      <div class="lg:col-span-3 flex flex-col gap-2.5 w-full sm:max-w-[240px] lg:ml-auto">
+        <div class="glass-panel rounded-2xl p-4 hover:border-burgundyLight/60 transition">
+          <div class="text-2xl sm:text-3xl font-bold text-white">24 ч</div>
+          <div class="text-xs text-white/70 mt-0.5 leading-snug">Точная смета в 3 вариантах после первого разговора</div>
+        </div>
+        <div class="glass-panel rounded-2xl p-4 hover:border-burgundyLight/60 transition">
+          <div class="text-2xl sm:text-3xl font-bold text-white">0 ₽</div>
+          <div class="text-xs text-white/70 mt-0.5 leading-snug">Скрытых наценок — показываем прямые чеки подрядчиков</div>
+        </div>
+        <div class="glass-burgundy rounded-2xl p-4">
+          <div class="text-sm font-semibold text-white">Санкт-Петербург и ЛО</div>
+          <div class="text-[11px] text-white/80 mt-0.5 leading-snug">Особняки, крыши, залив и площадки до 10 000+ гостей</div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ================= БЛОК 2: О НАС И ГАРАНТИИ (АСИММЕТРИЧНЫЙ БЛОК КАК В РЕФЕРЕНСЕ) ================= -->
+  <section id="trust" class="py-16 sm:py-24 px-2 sm:px-6 border-b border-white/10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      
+      <!-- Левая колонка (Текст + 3 иконки преимуществ + кнопка) -->
+      <div class="lg:col-span-6 space-y-6">
+        <div class="text-[11px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+          О ПОДХОДЕ DERZKO
+        </div>
+        <h2 class="font-editorial text-4xl sm:text-5xl font-medium leading-[1.12]">
+          Смелые концепции.<br>Абсолютный порядок в деталях.
+        </h2>
+        <p class="text-sm sm:text-base text-white/70 leading-relaxed">
+          Мы назвали агентство <strong class="text-white font-medium">Derzko</strong>, потому что не боимся сжатых сроков, нестандартных площадок Петербурга и масштабных задач. Но внутри работы наше главное правило — бережность к вам. Вы никогда не останетесь один на один с хаосом подготовки.
+        </p>
+
+        <!-- 3 колонки с мини-иконками (как "Client First / Timeless Design" на макете) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 border-t border-white/10">
+          <div class="space-y-2">
+            <div class="w-9 h-9 rounded-lg bg-burgundy/20 border border-burgundy/40 flex items-center justify-center text-burgundyLight text-sm font-bold">
+              01
+            </div>
+            <h3 class="text-sm font-semibold">Честная смета</h3>
+            <p class="text-xs text-white/60 leading-relaxed">Фиксируем агентский гонорар в договоре. Все скидки подрядчиков — ваши.</p>
+          </div>
+
+          <div class="space-y-2">
+            <div class="w-9 h-9 rounded-lg bg-burgundy/20 border border-burgundy/40 flex items-center justify-center text-burgundyLight text-sm font-bold">
+              02
+            </div>
+            <h3 class="text-sm font-semibold">Железные сроки</h3>
+            <p class="text-xs text-white/60 leading-relaxed">Онлайн-график готовности в одном чате. Каждый этап сдаём строго по расписанию.</p>
+          </div>
+
+          <div class="space-y-2">
+            <div class="w-9 h-9 rounded-lg bg-burgundy/20 border border-burgundy/40 flex items-center justify-center text-burgundyLight text-sm font-bold">
+              03
+            </div>
+            <h3 class="text-sm font-semibold">План «Б» на погоду</h3>
+            <p class="text-xs text-white/60 leading-relaxed">Знаем капризы Петербурга: заранее держим наготове шатры, пледы и закрытые залы.</p>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <a href="#process" class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/20 text-xs font-medium hover:border-burgundyLight hover:bg-burgundy/15 transition">
+            <span>Как устроен процесс по дням</span>
+            <span class="text-burgundyLight">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Правая колонка (Крупное фото + наложенный бейдж в левом нижнем углу) -->
+      <div class="lg:col-span-6 relative">
+        <div class="rounded-[28px] overflow-hidden border border-white/10 aspect-[4/3] relative">
+          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80" 
+               alt="Сервировка и атмосфера вечера в Санкт-Петербурге" 
+               class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        </div>
+
+        <!-- Наложенный стеклянный бордовый бейдж (как "Since 2000" на референсе) -->
+        <div class="glass-burgundy rounded-2xl p-5 sm:p-6 max-w-[240px] sm:max-w-[260px] -mt-16 sm:mt-0 sm:absolute sm:-bottom-6 sm:-left-6 shadow-2xl relative z-10 ml-4 sm:ml-0">
+          <span class="text-[11px] uppercase tracking-[0.2em] text-white/80 block">Гарантия по договору</span>
+          <div class="font-editorial text-4xl sm:text-5xl font-bold text-white my-1">100%</div>
+          <p class="text-xs text-white/85 leading-snug">прозрачность каждого чека и тайминга с первого дня знакомства</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= БЛОК 3: НАПРАВЛЕНИЯ И ФОРМАТЫ (ГОРИЗОНТАЛЬНЫЙ РЯД КАРТОЧЕК С "+") ================= -->
+  <section id="formats" class="py-16 sm:py-24 px-2 sm:px-6 border-b border-white/10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Заголовок слева (3 колонки) -->
+      <div class="lg:col-span-4 space-y-4 lg:sticky lg:top-8">
+        <div class="text-[11px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+          НАШИ ФОРМАТЫ
+        </div>
+        <h2 class="font-editorial text-4xl sm:text-5xl font-medium leading-[1.1]">
+          Четыре стихии, в которых мы знаем каждую деталь.
+        </h2>
+        <p class="text-xs sm:text-sm text-white/65 leading-relaxed">
+          Нажмите на любую карточку, чтобы сразу примерить ориентир бюджета и сроки подготовки в нашем калькуляторе ниже.
+        </p>
+      </div>
+
+      <!-- 4 вертикальные карточки справа (8 колонок, как в блоке Our Services на референсе) -->
+      <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        
+        <!-- Карточка 1 -->
+        <div onclick="selectFormatAndScroll('wedding')" class="cursor-pointer bg-card hover:bg-cardHover border border-white/10 hover:border-burgundyLight/60 rounded-2xl p-5 flex flex-col justify-between min-h-[290px] transition group">
+          <div class="space-y-4">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-lg transition">
+              💍
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-snug">Душевные свадьбы</h3>
+            <p class="text-xs text-white/65 leading-relaxed">
+              Камерные ужины в особняках Петербурга и торжества на берегу Финского залива без шаблонных конкурсов и суеты.
+            </p>
+          </div>
+          <div class="pt-6 flex items-center justify-between border-t border-white/5 mt-4">
+            <span class="text-[11px] text-white/50 group-hover:text-white transition">Рассчитать смету</span>
+            <span class="w-8 h-8 rounded-full bg-white/5 border border-white/15 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-sm transition">+</span>
+          </div>
+        </div>
+
+        <!-- Карточка 2 -->
+        <div onclick="selectFormatAndScroll('corp')" class="cursor-pointer bg-card hover:bg-cardHover border border-white/10 hover:border-burgundyLight/60 rounded-2xl p-5 flex flex-col justify-between min-h-[290px] transition group">
+          <div class="space-y-4">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-lg transition">
+              🥂
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-snug">Корпоративы со смыслом</h3>
+            <p class="text-xs text-white/65 leading-relaxed">
+              События, которые объединяют команду: парусные регаты, выезды за город и концептуальные вечеринки. Работаем по ЭДО.
+            </p>
+          </div>
+          <div class="pt-6 flex items-center justify-between border-t border-white/5 mt-4">
+            <span class="text-[11px] text-white/50 group-hover:text-white transition">Рассчитать смету</span>
+            <span class="w-8 h-8 rounded-full bg-white/5 border border-white/15 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-sm transition">+</span>
+          </div>
+        </div>
+
+        <!-- Карточка 3 -->
+        <div onclick="selectFormatAndScroll('forum')" class="cursor-pointer bg-card hover:bg-cardHover border border-white/10 hover:border-burgundyLight/60 rounded-2xl p-5 flex flex-col justify-between min-h-[290px] transition group">
+          <div class="space-y-4">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-lg transition">
+              🎙️
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-snug">Форумы и бизнес</h3>
+            <p class="text-xs text-white/65 leading-relaxed">
+              Застройка площадок, технический продакшн, быстрая аккредитация без очередей и железный тайминг до минуты.
+            </p>
+          </div>
+          <div class="pt-6 flex items-center justify-between border-t border-white/5 mt-4">
+            <span class="text-[11px] text-white/50 group-hover:text-white transition">Рассчитать смету</span>
+            <span class="w-8 h-8 rounded-full bg-white/5 border border-white/15 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-sm transition">+</span>
+          </div>
+        </div>
+
+        <!-- Карточка 4 -->
+        <div onclick="selectFormatAndScroll('fest')" class="cursor-pointer bg-card hover:bg-cardHover border border-white/10 hover:border-burgundyLight/60 rounded-2xl p-5 flex flex-col justify-between min-h-[290px] transition group">
+          <div class="space-y-4">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-lg transition">
+              🎪
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-snug">Фестивали и масштаб</h3>
+            <p class="text-xs text-white/65 leading-relaxed">
+              События в Севкабель Порту, Брусницыне и парках СПб. Режиссура, безопасность, согласования и потоки до 10 000+ гостей.
+            </p>
+          </div>
+          <div class="pt-6 flex items-center justify-between border-t border-white/5 mt-4">
+            <span class="text-[11px] text-white/50 group-hover:text-white transition">Рассчитать смету</span>
+            <span class="w-8 h-8 rounded-full bg-white/5 border border-white/15 group-hover:bg-burgundy group-hover:border-burgundyLight flex items-center justify-center text-sm transition">+</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= БЛОК 4: ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР ПРОЗРАЧНОЙ СМЕТЫ ================= -->
+  <section id="calculator" class="py-16 sm:py-24 px-2 sm:px-6 border-b border-white/10">
+    <div class="bg-card border border-white/10 rounded-[32px] p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-burgundy/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-2xl space-y-2 mb-8">
+        <div class="text-[11px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+          ЧЕСТНАЯ МАТЕМАТИКА СОБЫТИЯ
+        </div>
+        <h2 class="font-editorial text-3xl sm:text-5xl font-medium">
+          Приценитесь к срокам и структуре бюджета за 3 клика
+        </h2>
+        <p class="text-xs sm:text-sm text-white/65">
+          Без звонков и сложных анкет. Выберите параметры вашего события:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Левая часть: настройки -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Шаг 1 -->
+          <div class="space-y-2.5">
+            <label class="text-xs uppercase tracking-wider text-white/60 block">1. Формат мероприятия</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="calc-formats">
+              <button type="button" onclick="setCalcFormat('wedding')" data-format="wedding" class="calc-tab active bg-burgundy text-white border border-burgundyLight py-3 px-3 rounded-xl text-xs font-semibold transition">
+                Свадьба
+              </button>
+              <button type="button" onclick="setCalcFormat('corp')" data-format="corp" class="calc-tab bg-obsidian text-white/75 border border-white/10 hover:border-white/30 py-3 px-3 rounded-xl text-xs font-semibold transition">
+                Корпоратив
+              </button>
+              <button type="button" onclick="setCalcFormat('forum')" data-format="forum" class="calc-tab bg-obsidian text-white/75 border border-white/10 hover:border-white/30 py-3 px-3 rounded-xl text-xs font-semibold transition">
+                Деловой форум
+              </button>
+              <button type="button" onclick="setCalcFormat('fest')" data-format="fest" class="calc-tab bg-obsidian text-white/75 border border-white/10 hover:border-white/30 py-3 px-3 rounded-xl text-xs font-semibold transition">
+                Фестиваль
+              </button>
+            </div>
+          </div>
+
+          <!-- Шаг 2 -->
+          <div class="space-y-2.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs uppercase tracking-wider text-white/60">2. Количество гостей</label>
+              <span id="guests-val" class="text-lg font-bold text-white bg-obsidian px-3.5 py-1 rounded-full border border-white/10">80 гостей</span>
+            </div>
+            <input id="guests-range" type="range" min="20" max="1000" step="10" value="80" oninput="updateCalculator()" class="w-full">
+            <div class="flex justify-between text-[11px] text-white/40">
+              <span>Камерно (20)</span>
+              <span>Средний масштаб (250)</span>
+              <span>Масштабно (1000+)</span>
+            </div>
+          </div>
+
+          <!-- Шаг 3 -->
+          <div class="space-y-2.5">
+            <label class="text-xs uppercase tracking-wider text-white/60 block">3. Когда планируете дату?</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="calc-urgencies">
+              <button type="button" onclick="setCalcUrgency('urgent')" data-urgency="urgent" class="urg-tab bg-obsidian text-white/75 border border-white/10 py-3 px-3 rounded-xl text-xs font-medium transition">
+                Срочно (до 1 месяца)
+              </button>
+              <button type="button" onclick="setCalcUrgency('normal')" data-urgency="normal" class="urg-tab active bg-burgundy text-white border border-burgundyLight py-3 px-3 rounded-xl text-xs font-medium transition">
+                Через 1–3 месяца
+              </button>
+              <button type="button" onclick="setCalcUrgency('calm')" data-urgency="calm" class="urg-tab bg-obsidian text-white/75 border border-white/10 py-3 px-3 rounded-xl text-xs font-medium transition">
+                Есть время (3+ мес.)
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Правая часть: Динамический результат -->
+        <div class="lg:col-span-5 bg-obsidian border border-white/10 rounded-2xl p-6 space-y-5">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <span class="text-[11px] uppercase tracking-wider text-white/50 block">Ориентир бюджета под ключ</span>
+              <div id="calc-budget" class="font-editorial text-3xl sm:text-4xl font-bold text-white mt-0.5">от 1.2 млн ₽</div>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] uppercase tracking-wider text-white/50 block">Смета и площадки</span>
+              <span class="text-xs font-semibold text-burgundyLight bg-burgundy/15 border border-burgundy/40 px-2.5 py-1 rounded-full inline-block mt-1">за 24 часа</span>
+            </div>
+          </div>
+
+          <p id="calc-team-desc" class="text-xs text-white/75 leading-relaxed">
+            Подключим команду из <strong class="text-white">4 координаторов</strong> во главе с продюсером. Подберём свободные особняки и панорамные залы СПб за 48 часов.
+          </p>
+
+          <!-- Полоса прозрачного распределения сметы -->
+          <div class="space-y-2">
+            <div class="text-[11px] text-white/50 flex justify-between">
+              <span>Прозрачная структура расходов:</span>
+              <span class="text-white/80">Фиксированная комиссия Derzko: 10%</span>
+            </div>
+            <div class="w-full h-2.5 rounded-full overflow-hidden flex bg-white/10">
+              <div class="bg-burgundyLight h-full" style="width: 48%" title="Площадка и банкет"></div>
+              <div class="bg-white/70 h-full" style="width: 27%" title="Техника, свет, декор"></div>
+              <div class="bg-white/35 h-full" style="width: 15%" title="Программа и артисты"></div>
+              <div class="bg-burgundyDark h-full" style="width: 10%" title="Агентство"></div>
+            </div>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-white/55 pt-1">
+              <span>● 48% Площадка и меню</span>
+              <span>● 27% Декор и продакшн</span>
+              <span>● 15% Программа</span>
+              <span>● 10% Агентство</span>
+            </div>
+          </div>
+
+          <!-- Быстрое получение сметы в 1 поле -->
+          <div class="pt-2">
+            <form onsubmit="submitCalcQuick(event)" class="space-y-2.5">
+              <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" required placeholder="Ваш телефон или @ник в Telegram" 
+                       class="flex-1 bg-card border border-white/15 rounded-full px-4 py-3 text-xs text-white placeholder-white/40 focus:outline-none focus:border-burgundyLight">
+                <button type="submit" class="bg-burgundy hover:bg-burgundyLight text-white px-5 py-3 rounded-full text-xs font-semibold transition whitespace-nowrap">
+                  Получить 3 сметы →
+                </button>
+              </div>
+              <p id="calc-success" class="hidden text-xs text-emerald-400 pl-2">
+                ✓ Приняли! Пришлём подборку свободных площадок СПб и расчёт в течение 15 минут.
+              </p>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= БЛОК 5: ПОРТФОЛИО (4 КАРТОЧКИ В РЯД + FEATURED КЕЙС КАК В РЕФЕРЕНСЕ) ================= -->
+  <section id="cases" class="py-16 sm:py-24 px-2 sm:px-6 border-b border-white/10 space-y-16">
+    
+    <!-- Часть 1: Selected Projects (Заголовок слева, фильтр/кнопка справа + 4 фото-карточки в ряд) -->
+    <div class="space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+            ИЗБРАННЫЕ ПРОЕКТЫ В САНКТ-ПЕТЕРБУРГЕ
+          </div>
+          <h2 class="font-editorial text-4xl sm:text-5xl font-medium mt-1">
+            События, которые помнят до сих пор.
+          </h2>
+        </div>
+
+        <!-- Кнопки фильтрации -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterCases('all')" data-filter="all" class="case-filter bg-white text-black px-4 py-2 rounded-full text-xs font-semibold transition">Все</button>
+          <button onclick="filterCases('wedding')" data-filter="wedding" class="case-filter bg-card text-white/75 border border-white/10 hover:border-white/30 px-4 py-2 rounded-full text-xs font-medium transition">Свадьбы</button>
+          <button onclick="filterCases('corp')" data-filter="corp" class="case-filter bg-card text-white/75 border border-white/10 hover:border-white/30 px-4 py-2 rounded-full text-xs font-medium transition">Корпоративы</button>
+          <button onclick="filterCases('forum')" data-filter="forum" class="case-filter bg-card text-white/75 border border-white/10 hover:border-white/30 px-4 py-2 rounded-full text-xs font-medium transition">Форумы и фестивали</button>
+        </div>
+      </div>
+
+      <!-- Сетка из 4 скруглённых карточек в ряд (как в референсе Aakriti) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="cases-grid">
+        
+        <!-- Кейс 1 -->
+        <article data-category="wedding" class="case-item group relative rounded-[24px] overflow-hidden border border-white/10 aspect-[4/3] bg-card">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Камерная свадьба в особняке" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-5 flex flex-col justify-end">
+            <div class="flex gap-2 mb-2">
+              <span class="text-[10px] uppercase tracking-wider bg-burgundy/90 px-2.5 py-0.5 rounded-full">За 21 день</span>
+              <span class="text-[10px] uppercase tracking-wider glass-panel px-2.5 py-0.5 rounded-full">65 гостей</span>
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-tight">Ужин при свечах на Английской набережной</h3>
+            <p class="text-xs text-white/70 mt-1">Сэкономили 25% сметы за счёт архитектурного света вместо срезной флористики.</p>
+          </div>
+        </article>
+
+        <!-- Кейс 2 -->
+        <article data-category="corp" class="case-item group relative rounded-[24px] overflow-hidden border border-white/10 aspect-[4/3] bg-card">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80" alt="IT Корпоратив" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-5 flex flex-col justify-end">
+            <div class="flex gap-2 mb-2">
+              <span class="text-[10px] uppercase tracking-wider bg-burgundy/90 px-2.5 py-0.5 rounded-full">За 1.5 месяца</span>
+              <span class="text-[10px] uppercase tracking-wider glass-panel px-2.5 py-0.5 rounded-full">350 гостей</span>
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-tight">Иммерсивный вечер IT-компании</h3>
+            <p class="text-xs text-white/70 mt-1">Превратили индустриальный цех на Кожевенной линии в неоновый театр.</p>
+          </div>
+        </article>
+
+        <!-- Кейс 3 -->
+        <article data-category="forum" class="case-item group relative rounded-[24px] overflow-hidden border border-white/10 aspect-[4/3] bg-card">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80" alt="Деловой форум" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-5 flex flex-col justify-end">
+            <div class="flex gap-2 mb-2">
+              <span class="text-[10px] uppercase tracking-wider bg-burgundy/90 px-2.5 py-0.5 rounded-full">Аккредитация за 18 мин</span>
+              <span class="text-[10px] uppercase tracking-wider glass-panel px-2.5 py-0.5 rounded-full">900 участников</span>
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-tight">Федеральный техно-форум в СПб</h3>
+            <p class="text-xs text-white/70 mt-1">3 параллельные сцены, телемост и безупречный тайминг 24 спикеров.</p>
+          </div>
+        </article>
+
+        <!-- Кейс 4 -->
+        <article data-category="wedding" class="case-item group relative rounded-[24px] overflow-hidden border border-white/10 aspect-[4/3] bg-card">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80" alt="Свадьба в Репино" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-5 flex flex-col justify-end">
+            <div class="flex gap-2 mb-2">
+              <span class="text-[10px] uppercase tracking-wider bg-burgundy/90 px-2.5 py-0.5 rounded-full">Репино • Залив</span>
+              <span class="text-[10px] uppercase tracking-wider glass-panel px-2.5 py-0.5 rounded-full">90 гостей</span>
+            </div>
+            <h3 class="font-editorial text-2xl font-medium leading-tight">Лесная сказка на берегу залива</h3>
+            <p class="text-xs text-white/70 mt-1">Прозрачный шатёр с обогревом среди сосен и живой джаз на закате.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Часть 2: FEATURED PROJECT (Крупный разбор флагманского проекта: слева описание, справа широкое фото) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-6">
+      <div class="lg:col-span-5 space-y-5">
+        <div class="text-[11px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+          ФЛАГМАНСКИЙ КЕЙС • МАСШТАБ
+        </div>
+        <h3 class="font-editorial text-3xl sm:text-5xl font-medium leading-[1.1]">
+          Летний музыкально-гастрономический фестиваль у воды.
+        </h3>
+        <p class="text-xs sm:text-sm text-white/70 leading-relaxed">
+          Организовали событие под ключ за 35 дней: от согласования безопасности и застройки главной сцены с видом на вантовый мост до координации 22 фуд-корнеров и комфортной навигации для гостей.
+        </p>
+
+        <ul class="space-y-2 text-xs text-white/80 pt-2 border-t border-white/10">
+          <li class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-burgundyLight"></span>
+            <span><strong class="text-white">Локация:</strong> Культурный квартал на берегу Финского залива, СПб</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-burgundyLight"></span>
+            <span><strong class="text-white">Формат:</strong> Open-air фестиваль и бренд-зоны</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-burgundyLight"></span>
+            <span><strong class="text-white">Масштаб:</strong> 4 200 гостей за уикенд • 0 задержек по лайнапу</span>
+          </li>
+        </ul>
+
+        <div class="pt-2">
+          <a href="#contact" class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/25 text-xs font-semibold hover:bg-burgundy hover:border-burgundyLight transition">
+            <span>Обсудить похожий проект</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="rounded-[28px] overflow-hidden border border-white/15 aspect-[16/9] relative">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80" 
+               alt="Фестиваль на берегу залива" 
+               class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-transparent"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ================= БЛОК 6: 5 СПОКОЙНЫХ ШАГОВ ПОДГОТОВКИ (ТАЙМЛАЙН) ================= -->
+  <section id="process" class="py-16 sm:py-20 px-2 sm:px-6 border-b border-white/10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <div>
+        <div class="text-[11px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+          КАК МЫ РАБОТАЕМ
+        </div>
+        <h2 class="font-editorial text-4xl sm:text-5xl font-medium mt-1">
+          От первой чашки кофе до финальных объятий — 5 шагов
+        </h2>
+      </div>
+      <p class="text-xs sm:text-sm text-white/60 max-w-md">
+        Мы забираем на себя сотни звонков, таблиц и согласований. Вы только выбираете из лучших вариантов:
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div class="bg-card border border-white/10 rounded-2xl p-5 space-y-3">
+        <span class="text-xs font-bold text-burgundyLight bg-burgundy/15 px-3 py-1 rounded-full">День 1</span>
+        <h3 class="font-editorial text-2xl font-medium">Бережный брифинг</h3>
+        <p class="text-xs text-white/65 leading-relaxed">Встречаемся в центре Петербурга или онлайн. Слушаем ваши мечты и сразу называем честные вилки цен.</p>
+      </div>
+      <div class="bg-card border border-white/10 rounded-2xl p-5 space-y-3">
+        <span class="text-xs font-bold text-burgundyLight bg-burgundy/15 px-3 py-1 rounded-full">День 2–3</span>
+        <h3 class="font-editorial text-2xl font-medium">Идея и смета</h3>
+        <p class="text-xs text-white/65 leading-relaxed">Готовим концепцию, список свободных локаций СПб под вашу дату и открытую смету. Фиксируем цену в договоре.</p>
+      </div>
+      <div class="bg-card border border-white/10 rounded-2xl p-5 space-y-3">
+        <span class="text-xs font-bold text-burgundyLight bg-burgundy/15 px-3 py-1 rounded-full">День 4–10</span>
+        <h3 class="font-editorial text-2xl font-medium">Команда мечты</h3>
+        <p class="text-xs text-white/65 leading-relaxed">Подключаем проверенных ведущих, декораторов, шеф-поваров и техников с опытом от 5 лет.</p>
+      </div>
+      <div class="bg-card border border-white/10 rounded-2xl p-5 space-y-3">
+        <span class="text-xs font-bold text-burgundyLight bg-burgundy/15 px-3 py-1 rounded-full">Весь период</span>
+        <h3 class="font-editorial text-2xl font-medium">Прозрачный чат</h3>
+        <p class="text-xs text-white/65 leading-relaxed">Ведём подготовку в одном окне в Telegram с живой таблицей статусов. Никакой суеты и лишних дёрганий.</p>
+      </div>
+      <div class="bg-burgundy/25 border border-burgundyLight/50 rounded-2xl p-5 space-y-3">
+        <span class="text-xs font-bold text-white bg-burgundy px-3 py-1 rounded-full">День Х</span>
+        <h3 class="font-editorial text-2xl font-medium">Ваше спокойствие</h3>
+        <p class="text-xs text-white/80 leading-relaxed">Команда Derzko на площадке за 6 часов до старта. Вы отдыхаете, общаетесь с близкими и принимаете комплименты.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= БЛОК 7: УЗКАЯ ПОЛОСА ОТЗЫВОВ (1-В-1 КАК НА РЕФЕРЕНСЕ) ================= -->
+  <section class="py-12 sm:py-16 px-2 sm:px-6">
+    <div class="bg-card border border-white/10 rounded-[28px] p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      
+      <!-- Левая часть -->
+      <div class="lg:col-span-4 space-y-2">
+        <div class="text-[10px] uppercase tracking-[0.25em] text-burgundyLight font-semibold">
+          ОТЗЫВЫ КЛИЕНТОВ
+        </div>
+        <h2 class="font-editorial text-3xl sm:text-4xl font-medium leading-tight">
+          Нам доверяют и влюблённые пары, и крупный бизнес.
+        </h2>
+      </div>
+
+      <!-- Правая часть: Слайдер цитат с кнопками влево/вправо и круглым аватаром -->
+      <div class="lg:col-span-8 flex items-center justify-between gap-4">
+        <button onclick="prevReview()" aria-label="Предыдущий отзыв" class="w-10 h-10 rounded-full border border-white/15 hover:border-burgundyLight flex items-center justify-center text-white/70 hover:text-white transition shrink-0">
+          ‹
+        </button>
+
+        <div class="flex-1 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-obsidian/70 border border-white/10 rounded-2xl p-5 sm:p-6">
+          <div class="space-y-3 max-w-xl">
+            <div class="flex items-center gap-3">
+              <span class="font-editorial text-5xl leading-none text-burgundyLight">“</span>
+              <p id="review-text" class="text-xs sm:text-sm text-white/85 leading-relaxed">
+                Мы обратились в Derzko за 3 недели до свадьбы, когда другие агентства разводили руками. Ребята за сутки дали честную смету до рубля, нашли закрытый особняк на Неве и провели день так душевно, что мы с мужем просто наслаждались каждой минутой.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pl-7 text-xs">
+              <span class="text-amber-400 tracking-widest">★★★★★</span>
+              <span class="text-white/50">5.0 • Реальный отзыв в Telegram</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0 pl-7 sm:pl-0">
+            <img id="review-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Клиент" class="w-14 h-14 rounded-full object-cover border-2 border-burgundyLight">
+            <div>
+              <div id="review-author" class="text-xs font-bold text-white">Алина и Марк</div>
+              <div id="review-role" class="text-[11px] text-white/55">Камерная свадьба, 65 гостей</div>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="nextReview()" aria-label="Следующий отзыв" class="w-10 h-10 rounded-full border border-white/15 hover:border-burgundyLight flex items-center justify-center text-white/70 hover:text-white transition shrink-0">
+          ›
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= БЛОК 8: ФИНАЛЬНЫЙ БАННЕР КОНТАКТА (КАК В НИЖНЕЙ ЧАСТИ РЕФЕРЕНСА) ================= -->
+  <section id="contact" class="py-8 sm:py-12 px-2 sm:px-6">
+    <div class="bg-card border border-white/15 rounded-[32px] p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-burgundy/25 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+        
+        <!-- Левая часть: Заголовок + контакты + форма в 2 поля без анкет -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="space-y-2">
+            <h2 class="font-editorial text-4xl sm:text-5xl font-medium leading-[1.08]">
+              Давайте создадим нечто особенное вместе.
+            </h2>
+            <p class="text-xs sm:text-sm text-white/70 max-w-xl">
+              Никаких сложных брифов. Оставьте контакт — продюсер <strong class="text-white">Derzko</strong> бережно свяжется с вами в течение 15 минут, ответит на вопросы по датам и подготовит расчёт сметы.
+            </p>
+          </div>
+
+          <!-- Форма в 2 поля -->
+          <form onsubmit="submitFinalForm(event)" class="space-y-3 max-w-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input type="text" required placeholder="Как к вам обращаться?" 
+                     class="bg-obsidian border border-white/15 rounded-full px-5 py-3.5 text-xs text-white placeholder-white/45 focus:outline-none focus:border-burgundyLight">
+              <input type="text" required placeholder="Телефон или @ник в Telegram" 
+                     class="bg-obsidian border border-white/15 rounded-full px-5 py-3.5 text-xs text-white placeholder-white/45 focus:outline-none focus:border-burgundyLight">
+            </div>
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <button type="submit" class="inline-flex items-center gap-3 bg-burgundy hover:bg-burgundyLight text-white pl-6 pr-2 py-2 rounded-full text-xs sm:text-sm font-semibold transition shadow-lg">
+                <span>Обсудить моё событие</span>
+                <span class="w-8 h-8 rounded-full bg-obsidian flex items-center justify-center">↗</span>
+              </button>
+              <span class="text-xs text-white/45">или напишите напрямую:</span>
+              <a href="https://t.me/" target="_blank" class="text-xs font-semibold text-white underline decoration-burgundyLight underline-offset-4 hover:text-burgundyLight transition">
+                Telegram-чат агентства →
+              </a>
+            </div>
+            <p id="final-success" class="hidden text-xs text-emerald-400 pt-1">
+              ✓ Спасибо за доверие! Мы получили ваш контакт и напишем вам в ближайшие 15 минут.
+            </p>
+          </form>
+
+          <!-- Строка прямых контактов внизу (как на референсе) -->
+          <div class="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-white/75">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-burgundyLight">✆</span>
+              <div>
+                <div class="text-[10px] text-white/45">Телефон в СПб</div>
+                <a href="tel:+78120000000" class="font-semibold text-white hover:text-burgundyLight transition">+7 (812) 000-00-00</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-burgundyLight">✉</span>
+              <div>
+                <div class="text-[10px] text-white/45">Почта для тендеров</div>
+                <a href="mailto:hello@derzko-spb.ru" class="font-semibold text-white hover:text-burgundyLight transition">hello@derzko-spb.ru</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-burgundyLight">📍</span>
+              <div>
+                <div class="text-[10px] text-white/45">Встречи за кофе</div>
+                <span class="font-semibold text-white">СПб, Петроградская наб.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Правая часть: Фото-карточка с кнопкой-капсулой по центру (1-в-1 как "Book Consultation" на референсе) -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-[24px] overflow-hidden border border-white/15 aspect-[16/10] flex items-center justify-center group">
+            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80" 
+                 alt="Встреча с продюсером Derzko" 
+                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-black/45"></div>
+            
+            <a href="https://t.me/" target="_blank" class="relative z-10 inline-flex items-center gap-4 bg-white/95 text-black pl-6 pr-2 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-2xl hover:bg-burgundy hover:text-white transition">
+              <span>Написать в Telegram</span>
+              <span class="w-9 h-9 rounded-full bg-obsidian text-white flex items-center justify-center">↗</span>
             </a>
-
-            <!-- Desktop Navigation -->
-            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-muted">
-                <a href="#formats" class="hover:text-white transition-colors">Форматы</a>
-                <a href="#calculator" class="hover:text-white transition-colors">Прозрачная смета</a>
-                <a href="#cases" class="hover:text-white transition-colors">Кейсы</a>
-                <a href="#process" class="hover:text-white transition-colors">Этапы</a>
-                <a href="#trust" class="hover:text-white transition-colors">О нас</a>
-            </nav>
-
-            <!-- Right Actions -->
-            <div class="hidden sm:flex items-center gap-3">
-                <a href="#contact" title="Написать в Telegram" class="w-10 h-10 rounded-full bg-white/5 hover:bg-burgundy/30 border border-white/10 hover:border-burgundy-glow flex items-center justify-center text-white transition-all">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                </a>
-                <a href="#contact" class="px-5 py-2.5 rounded-full text-sm font-medium text-white border border-burgundy-glow bg-burgundy/20 hover:bg-burgundy hover:shadow-burgundy-glow transition-all">
-                    Обсудить событие
-                </a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-white" aria-label="Открыть меню">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+          </div>
         </div>
 
-        <!-- Mobile Drawer -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-surface border-b border-white/10 px-6 py-6 space-y-4">
-            <div class="flex flex-col space-y-3 text-base font-medium text-muted">
-                <a href="#formats" class="mobile-link py-1 hover:text-white">Форматы мероприятий</a>
-                <a href="#calculator" class="mobile-link py-1 hover:text-white">Калькулятор и смета</a>
-                <a href="#cases" class="mobile-link py-1 hover:text-white">Портфолио и кейсы</a>
-                <a href="#process" class="mobile-link py-1 hover:text-white">Как мы работаем</a>
-                <a href="#trust" class="mobile-link py-1 hover:text-white">Гарантии и отзывы</a>
-            </div>
-            <div class="pt-4 border-t border-white/10 flex flex-col gap-3">
-                <a href="#contact" class="mobile-link w-full py-3 rounded-xl bg-burgundy text-center font-semibold text-white">
-                    Обсудить событие
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- ================= BLOCK 1: HERO SECTION (#top) ================= -->
-    <section id="top" class="relative min-h-screen pt-28 pb-20 md:pt-36 md:pb-28 flex items-center ambient-hero overflow-hidden">
-        <!-- Decorative Ambient Background Image with Dark Gradient Overlay -->
-        <div class="absolute inset-0 -z-10 opacity-30">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80" 
-                 alt="Атмосфера вечернего события в Петербурге" 
-                 class="w-full h-full object-cover object-center"
-                 onerror="this.src='https://placehold.co/1920x1080/0A0A0A/800020?text=DERZKO+EVENTS'">
-            <div class="absolute inset-0 bg-gradient-to-b from-obsidian via-obsidian/80 to-obsidian"></div>
-        </div>
-
-        <!-- Glowing Burgundy Orb -->
-        <div class="absolute top-1/4 right-10 w-96 h-96 bg-burgundy/25 rounded-full blur-[130px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="max-w-4xl">
-                <!-- Location & Soulful Tag -->
-                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 mb-7">
-                    <span class="w-2 h-2 rounded-full bg-burgundy-glow animate-pulse"></span>
-                    <span class="text-xs sm:text-sm font-medium tracking-wide text-gray-300">
-                        Event-агентство полного цикла в Санкт-Петербурге и ЛО
-                    </span>
-                </div>
-
-                <!-- Main Headline -->
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
-                    <span class="text-burgundy-glow font-serif italic font-semibold tracking-normal pr-1">Derzko</span> в идеях.<br>
-                    Бережно к вам и вашему спокойствию
-                </h1>
-
-                <!-- Subheadline -->
-                <p class="text-lg sm:text-xl text-muted font-normal leading-relaxed max-w-2xl mb-10">
-                    Организуем события под ключ: от душевных свадеб с видом на Финский залив до масштабных деловых форумов и фестивалей. С открытой сметой и точным соблюдением сроков по договору.
-                </p>
-
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14">
-                    <a href="#calculator" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-burgundy hover:bg-burgundy-hover text-white font-semibold text-base shadow-burgundy-glow transition-all transform hover:-translate-y-0.5">
-                        <span>Рассчитать бюджет за 1 минуту</span>
-                        <i data-lucide="calculator" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#cases" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/15 text-white font-medium text-base transition-all">
-                        <span>Смотреть портфолио</span>
-                        <i data-lucide="arrow-down-right" class="w-5 h-5 text-muted"></i>
-                    </a>
-                </div>
-
-                <!-- 3 Guarantee Badges -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 border-t border-white/10">
-                    <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                        <div class="w-10 h-10 rounded-xl bg-burgundy/20 border border-burgundy/40 flex items-center justify-center shrink-0 text-burgundy-glow">
-                            <i data-lucide="file-check-2" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-white mb-1">Прозрачная математика</h3>
-                            <p class="text-xs text-muted leading-relaxed">Вы видите реальные чеки каждого подрядчика без скрытых наценок</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                        <div class="w-10 h-10 rounded-xl bg-burgundy/20 border border-burgundy/40 flex items-center justify-center shrink-0 text-burgundy-glow">
-                            <i data-lucide="clock-4" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-white mb-1">Смета за 24 часа</h3>
-                            <p class="text-xs text-muted leading-relaxed">Рассчитаем 3 варианта бюджета уже на следующий день после знакомства</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                        <div class="w-10 h-10 rounded-xl bg-burgundy/20 border border-burgundy/40 flex items-center justify-center shrink-0 text-burgundy-glow">
-                            <i data-lucide="umbrella" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-white mb-1">План «Б» на погоду СПб</h3>
-                            <p class="text-xs text-muted leading-relaxed">Заранее продумываем шатры, обогрев и закрытые панорамные веранды</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= BLOCK 2: EVENT FORMATS BENTO GRID (#formats) ================= -->
-    <section id="formats" class="py-20 md:py-28 relative border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="max-w-3xl mb-14">
-                <span class="text-xs font-semibold uppercase tracking-widest text-burgundy-glow block mb-3">Направления агентства</span>
-                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-                    Четыре формата, в которых мы продумываем каждую деталь
-                </h2>
-                <p class="text-muted text-base sm:text-lg">
-                    Выберите направление вашего события, чтобы посмотреть наш подход и сразу прицениться к бюджету:
-                </p>
-            </div>
-
-            <!-- 4 Interactive Bento Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- Card 1: Weddings -->
-                <div class="ambient-card rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden">
-                    <div>
-                        <div class="flex items-center justify-between gap-4 mb-6">
-                            <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">
-                                Срок подготовки: от 3 недель
-                            </span>
-                            <div class="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center text-burgundy-glow group-hover:bg-burgundy group-hover:text-white transition-colors">
-                                <i data-lucide="heart-handshake" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-
-                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" 
-                                 alt="Душевные свадьбы в Петербурге" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                 onerror="this.src='https://placehold.co/800x450/161618/B82543?text=Weddings+SPb'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent"></div>
-                            <span class="absolute bottom-3 left-4 text-xs text-gray-300 font-medium">Особняки центра СПб • Репино • Комарово</span>
-                        </div>
-
-                        <h3 class="text-2xl font-bold text-white mb-3">
-                            1. Душевные свадьбы и камерные ужины
-                        </h3>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
-                            Создаём историю о вашей паре без шаблонных сценариев и суеты. Исторические особняки на набережных, панорамные крыши или сосновый берег залива — подберём локацию, где вам и вашим близким будет по-настоящему тепло.
-                        </p>
-                    </div>
-
-                    <button onclick="selectFormatAndScroll('wedding')" class="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-burgundy-glow transition-colors pt-4 border-t border-white/10 text-left">
-                        <span>Примерить бюджет под этот формат</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform text-burgundy-glow"></i>
-                    </button>
-                </div>
-
-                <!-- Card 2: Corporate -->
-                <div class="ambient-card rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden">
-                    <div>
-                        <div class="flex items-center justify-between gap-4 mb-6">
-                            <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">
-                                Работаем по договору и ЭДО
-                            </span>
-                            <div class="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center text-burgundy-glow group-hover:bg-burgundy group-hover:text-white transition-colors">
-                                <i data-lucide="sparkles" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-
-                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
-                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80" 
-                                 alt="Корпоративные события" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                 onerror="this.src='https://placehold.co/800x450/161618/B82543?text=Corporate+Events'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent"></div>
-                            <span class="absolute bottom-3 left-4 text-xs text-gray-300 font-medium">Парусные регаты • Загородные клубы • Тематические гала-ужины</span>
-                        </div>
-
-                        <h3 class="text-2xl font-bold text-white mb-3">
-                            2. Корпоративные события со смыслом
-                        </h3>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
-                            Мероприятия, которые объединяют команду, а не превращаются в формальный банкет. Летние регаты под парусами, выезды за город, стильные вечеринки и юбилеи компаний, после которых сотрудники искренне благодарят.
-                        </p>
-                    </div>
-
-                    <button onclick="selectFormatAndScroll('corporate')" class="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-burgundy-glow transition-colors pt-4 border-t border-white/10 text-left">
-                        <span>Примерить бюджет под этот формат</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform text-burgundy-glow"></i>
-                    </button>
-                </div>
-
-                <!-- Card 3: Forums & Business -->
-                <div class="ambient-card rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden">
-                    <div>
-                        <div class="flex items-center justify-between gap-4 mb-6">
-                            <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">
-                                Точность тайминга до минуты
-                            </span>
-                            <div class="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center text-burgundy-glow group-hover:bg-burgundy group-hover:text-white transition-colors">
-                                <i data-lucide="mic-2" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-
-                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
-                            <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=80" 
-                                 alt="Деловые форумы и конференции" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                 onerror="this.src='https://placehold.co/800x450/161618/B82543?text=Business+Forums'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent"></div>
-                            <span class="absolute bottom-3 left-4 text-xs text-gray-300 font-medium">Экспофорум • Гранд-отели • Дизайнерские лофты</span>
-                        </div>
-
-                        <h3 class="text-2xl font-bold text-white mb-3">
-                            3. Деловой Петербург: форумы и конференции
-                        </h3>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
-                            Безупречный технический продакшн и деловая логистика. Застройка сцены и экспо-зон, быстрая электронная аккредитация сотен участников без очередей, сопровождение VIP-спикеров и многокамерные трансляции.
-                        </p>
-                    </div>
-
-                    <button onclick="selectFormatAndScroll('forum')" class="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-burgundy-glow transition-colors pt-4 border-t border-white/10 text-left">
-                        <span>Примерить бюджет под этот формат</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform text-burgundy-glow"></i>
-                    </button>
-                </div>
-
-                <!-- Card 4: Festivals -->
-                <div class="ambient-card rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden">
-                    <div>
-                        <div class="flex items-center justify-between gap-4 mb-6">
-                            <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">
-                                Потоки от 500 до 10 000+ гостей
-                            </span>
-                            <div class="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center text-burgundy-glow group-hover:bg-burgundy group-hover:text-white transition-colors">
-                                <i data-lucide="flame" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-
-                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
-                            <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80" 
-                                 alt="Фестивали и масштабные спецпроекты" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                 onerror="this.src='https://placehold.co/800x450/161618/B82543?text=Festivals+SPb'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-transparent to-transparent"></div>
-                            <span class="absolute bottom-3 left-4 text-xs text-gray-300 font-medium">Севкабель Порт • Культурный квартал Брусницын • Парки СПб</span>
-                        </div>
-
-                        <h3 class="text-2xl font-bold text-white mb-3">
-                            4. Фестивали и масштабные спецпроекты
-                        </h3>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
-                            Городские праздники, брендированные поп-ап зоны и опен-эйры на тысячные аудитории. Полная режиссура, согласования с площадками и городскими службами, продуманная навигация, фудкорты и безопасность.
-                        </p>
-                    </div>
-
-                    <button onclick="selectFormatAndScroll('festival')" class="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-burgundy-glow transition-colors pt-4 border-t border-white/10 text-left">
-                        <span>Примерить бюджет под этот формат</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform text-burgundy-glow"></i>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= BLOCK 3: TRANSPARENT BUDGET CALCULATOR (#calculator) ================= -->
-    <section id="calculator" class="py-20 md:py-28 relative bg-surface/60 border-y border-white/10">
-        <!-- Subtle Burgundy Radial Glow -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-burgundy/15 rounded-full blur-[150px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-3xl mb-12">
-                <span class="text-xs font-semibold uppercase tracking-widest text-burgundy-glow block mb-3">Честная математика события</span>
-                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-                    Прозрачная смета до старта работы
-                </h2>
-                <p class="text-muted text-base sm:text-lg">
-                    В <strong class="text-white font-semibold">Derzko</strong> нет скрытых агентских комиссий. Вы видите прямые цены петербургских площадок и подрядчиков, а наше вознаграждение фиксируется открыто и не меняется в процессе.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <!-- Left Column: 3-Step Interactive Configurator (7 cols) -->
-                <div class="lg:col-span-7 rounded-3xl bg-obsidian border border-white/10 p-6 sm:p-9 shadow-2xl">
-                    
-                    <!-- Step 1: Event Type -->
-                    <div class="mb-8">
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-muted mb-3">
-                            Шаг 1. Какое событие планируем?
-                        </label>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="calcTypeTabs">
-                            <button type="button" data-type="wedding" class="calc-type-btn active py-3 px-3 rounded-xl text-sm font-medium border border-burgundy-glow bg-burgundy text-white transition-all">
-                                Свадьба
-                            </button>
-                            <button type="button" data-type="corporate" class="calc-type-btn py-3 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all">
-                                Корпоратив
-                            </button>
-                            <button type="button" data-type="forum" class="calc-type-btn py-3 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all">
-                                Деловой форум
-                            </button>
-                            <button type="button" data-type="festival" class="calc-type-btn py-3 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all">
-                                Фестиваль
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Guest Count Range Slider -->
-                    <div class="mb-8">
-                        <div class="flex items-center justify-between mb-3">
-                            <label for="guestRange" class="text-xs font-semibold uppercase tracking-wider text-muted">
-                                Шаг 2. Примерное количество гостей
-                            </label>
-                            <span class="px-3.5 py-1 rounded-lg bg-burgundy/25 border border-burgundy-glow/40 text-white font-bold text-base" id="guestCountDisplay">
-                                80 гостей
-                            </span>
-                        </div>
-                        <input type="range" id="guestRange" min="20" max="1000" step="10" value="80">
-                        <div class="flex justify-between text-[11px] text-muted mt-2">
-                            <span>Камерно (20 чел.)</span>
-                            <span>150 чел.</span>
-                            <span>400 чел.</span>
-                            <span>Масштабно (1000+ чел.)</span>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Urgency / Timeframe -->
-                    <div class="mb-8">
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-muted mb-3">
-                            Шаг 3. Сколько времени до события?
-                        </label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="calcTimeTabs">
-                            <button type="button" data-time="urgent" class="calc-time-btn py-3 px-4 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all">
-                                Срочно — меньше месяца
-                            </button>
-                            <button type="button" data-time="normal" class="calc-time-btn active py-3 px-4 rounded-xl text-sm font-medium border border-burgundy-glow bg-burgundy text-white transition-all">
-                                Через 1–3 месяца
-                            </button>
-                            <button type="button" data-time="relaxed" class="calc-time-btn py-3 px-4 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all">
-                                Больше 3 месяцев
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Dynamic Live Output Box -->
-                    <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-burgundy/20 via-surfaceLight to-surface border border-burgundy-glow/40 mb-6">
-                        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-white/10">
-                            <div>
-                                <span class="text-xs text-muted block">Ориентир бюджета под ключ в СПб:</span>
-                                <span id="calcBudgetOutput" class="text-2xl sm:text-3xl font-bold text-white">от 1 450 000 ₽</span>
-                            </div>
-                            <span id="calcTeamBadge" class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white">
-                                Команда: 1 продюсер + 4 координатора
-                            </span>
-                        </div>
-                        <p id="calcSummaryText" class="text-sm text-gray-200 leading-relaxed">
-                            Для такого формата мы подберём 5 свободных площадок в Петербурге или Курортном районе за <strong class="text-white">48 часов</strong>, а детальную смету в 3 вариантах бюджета вы получите уже <strong class="text-white">завтра</strong>.
-                        </p>
-                    </div>
-
-                    <!-- Primary Action / Inline Fast Capture -->
-                    <div id="calcCtaWrapper">
-                        <button type="button" id="openCalcCaptureBtn" class="w-full py-4 px-6 rounded-2xl bg-burgundy hover:bg-burgundy-hover text-white font-semibold text-base shadow-burgundy-glow transition-all flex items-center justify-center gap-2">
-                            <span>Получить расчёт сметы и подборку площадок</span>
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-
-                    <!-- Expandable Single-Field Capture (Hidden until clicked) -->
-                    <form id="calcInlineForm" class="hidden pt-3 space-y-4 animate-fadeIn">
-                        <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/15">
-                            <label class="block text-xs font-medium text-gray-300 mb-2">
-                                Куда прислать расчёт и презентацию свободных площадок?
-                            </label>
-                            <div class="flex flex-col sm:flex-row gap-2.5">
-                                <input type="text" id="calcContactInput" required placeholder="Ваш телефон или @ник в Telegram" 
-                                       class="flex-1 px-4 py-3.5 rounded-xl bg-obsidian border border-white/15 text-white placeholder-muted text-sm focus:outline-none focus:border-burgundy-glow">
-                                <button type="submit" class="px-6 py-3.5 rounded-xl bg-burgundy hover:bg-burgundy-hover text-white font-semibold text-sm shrink-0 transition-all">
-                                    Прислать смету
-                                </button>
-                            </div>
-                            <p class="text-[11px] text-muted mt-2">
-                                Никаких навязчивых звонков — просто отправим файл с расчётом в удобный мессенджер.
-                            </p>
-                        </div>
-                    </form>
-
-                    <!-- Inline Success Message -->
-                    <div id="calcSuccessMsg" class="hidden p-5 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 text-sm flex items-center gap-3">
-                        <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 shrink-0"></i>
-                        <div>
-                            <strong class="block text-white font-semibold">Запрос принят в работу!</strong>
-                            Продюсер Derzko уже формирует подборку петербургских локаций под ваши параметры и свяжется в течение 15 минут.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Visual Donut Breakdown (5 cols) -->
-                <div class="lg:col-span-5 rounded-3xl bg-obsidian border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-2">Из чего состоит ваш бюджет</h3>
-                        <p class="text-xs sm:text-sm text-muted mb-6">
-                            Структура расходов меняется в зависимости от выбранного формата. Все чеки от подрядчиков открыты:
-                        </p>
-
-                        <!-- SVG Donut Chart -->
-                        <div class="relative w-52 h-52 mx-auto my-4 flex items-center justify-center">
-                            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                                <!-- Background Circle -->
-                                <circle cx="18" cy="18" r="15.915" fill="transparent" stroke="#1E1E24" stroke-width="3.8"></circle>
-                                <!-- Segment 1: Venue & Catering -->
-                                <circle id="segVenue" class="donut-segment" cx="18" cy="18" r="15.915" fill="transparent" stroke="#800020" stroke-width="3.8" stroke-dasharray="45 55" stroke-dashoffset="0"></circle>
-                                <!-- Segment 2: Tech & Decor -->
-                                <circle id="segTech" class="donut-segment" cx="18" cy="18" r="15.915" fill="transparent" stroke="#B82543" stroke-width="3.8" stroke-dasharray="25 75" stroke-dashoffset="-45"></circle>
-                                <!-- Segment 3: Program & Artists -->
-                                <circle id="segProgram" class="donut-segment" cx="18" cy="18" r="15.915" fill="transparent" stroke="#E14B68" stroke-width="3.8" stroke-dasharray="20 80" stroke-dashoffset="-70"></circle>
-                                <!-- Segment 4: Fixed Agency Fee -->
-                                <circle id="segAgency" class="donut-segment" cx="18" cy="18" r="15.915" fill="transparent" stroke="#FFFFFF" stroke-width="3.8" stroke-dasharray="10 90" stroke-dashoffset="-90"></circle>
-                            </svg>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-                                <span class="text-[11px] uppercase tracking-wider text-muted">Гонорар Derzko</span>
-                                <span class="text-2xl font-extrabold text-white">10%</span>
-                                <span class="text-[11px] text-burgundy-glow font-medium">фиксировано</span>
-                            </div>
-                        </div>
-
-                        <!-- Legend Breakdown -->
-                        <div class="space-y-3 mt-6 pt-6 border-t border-white/10 text-sm">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="w-3 h-3 rounded-sm bg-[#800020]"></span>
-                                    <span class="text-gray-200">Площадка, банкет / кейтеринг</span>
-                                </div>
-                                <span id="pctVenue" class="font-semibold text-white">45%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="w-3 h-3 rounded-sm bg-[#B82543]"></span>
-                                    <span class="text-gray-200">Декор, свет, звук и сцена</span>
-                                </div>
-                                <span id="pctTech" class="font-semibold text-white">25%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="w-3 h-3 rounded-sm bg-[#E14B68]"></span>
-                                    <span class="text-gray-200">Ведущий, артисты, фото и видео</span>
-                                </div>
-                                <span id="pctProgram" class="font-semibold text-white">20%</span>
-                            </div>
-                            <div class="flex items-center justify-between pt-2 border-t border-white/5">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="w-3 h-3 rounded-sm bg-white"></span>
-                                    <span class="text-white font-medium">Организация под ключ Derzko</span>
-                                </div>
-                                <span class="font-bold text-burgundy-glow">10%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 p-4 rounded-2xl bg-white/[0.03] border border-white/5 text-xs text-muted leading-relaxed">
-                        <strong class="text-white">Бонус для клиентов:</strong> передаём вам наши агентские скидки у площадок и технических подрядчиков СПб (экономия до 15% от прямого прайса).
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= BLOCK 4: FILTERABLE PORTFOLIO CASES (#cases) ================= -->
-    <section id="cases" class="py-20 md:py-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-                <div>
-                    <span class="text-xs font-semibold uppercase tracking-widest text-burgundy-glow block mb-3">Портфолио с цифрами и сроками</span>
-                    <h2 class="text-3xl sm:text-5xl font-bold tracking-tight">
-                        Проекты, за которые мы гордимся
-                    </h2>
-                </div>
-
-                <!-- Category Filter Buttons -->
-                <div class="flex flex-wrap gap-2" id="caseFilterContainer">
-                    <button data-filter="all" class="case-filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-burgundy text-white border border-burgundy-glow transition-all">
-                        Все проекты
-                    </button>
-                    <button data-filter="wedding" class="case-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/5 text-muted hover:text-white border border-white/10 transition-all">
-                        Свадьбы
-                    </button>
-                    <button data-filter="corporate" class="case-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/5 text-muted hover:text-white border border-white/10 transition-all">
-                        Корпоративы
-                    </button>
-                    <button data-filter="forum" class="case-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/5 text-muted hover:text-white border border-white/10 transition-all">
-                        Форумы и фестивали
-                    </button>
-                </div>
-            </div>
-
-            <!-- Cases Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="casesGrid">
-                
-                <!-- Case 1: Wedding -->
-                <article data-category="wedding" class="case-card ambient-card rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="h-56 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Камерная свадьба в особняке" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x500/121214/800020?text=Mansion+Wedding'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-burgundy text-white">За 21 день</span>
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-obsidian/80 backdrop-blur-md text-gray-200 border border-white/10">65 гостей</span>
-                            </div>
-                            <span class="absolute bottom-3 left-4 text-xs text-rose-200 font-medium">Английская набережная, СПб</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">Камерная свадьба при свечах в историческом особняке</h3>
-                            <div class="space-y-2.5 text-xs sm:text-sm text-muted">
-                                <p><strong class="text-white">Задача:</strong> Организовать тёплый семейный ужин без пафоса за 3 недели после смены предыдущего подрядчика.</p>
-                                <p><strong class="text-white">Решение:</strong> Согласовали закрытую дату в особняке, заменили дорогую срезную флористику на архитектурный свет и 400 свечей (сэкономив 25% сметы).</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-muted">
-                        <span>Бюджет: 1.8 млн ₽</span>
-                        <span class="text-burgundy-glow font-medium">Свадьба под ключ</span>
-                    </div>
-                </article>
-
-                <!-- Case 2: Forum -->
-                <article data-category="forum" class="case-card ambient-card rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="h-56 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Финтех-форум в Петербурге" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x500/121214/800020?text=IT+Forum+SPb'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-burgundy text-white">Подготовка: 1.5 мес</span>
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-obsidian/80 backdrop-blur-md text-gray-200 border border-white/10">850 участников</span>
-                            </div>
-                            <span class="absolute bottom-3 left-4 text-xs text-rose-200 font-medium">Севкабель Порт, Цех</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">Всероссийский IT & FinTech форум с 3 потоками</h3>
-                            <div class="space-y-2.5 text-xs sm:text-sm text-muted">
-                                <p><strong class="text-white">Задача:</strong> Застроить индустриальное пространство за одну ночь, избежать очередей на входе и провести онлайн-эфир.</p>
-                                <p><strong class="text-white">Решение:</strong> Запустили QR-регистрацию за 12 секунд на гостя, смонтировали круговую LED-сцену и обеспечили бесшовный тайминг для 42 спикеров.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-muted">
-                        <span>Бюджет: 6.4 млн ₽</span>
-                        <span class="text-burgundy-glow font-medium">Деловой форум</span>
-                    </div>
-                </article>
-
-                <!-- Case 3: Corporate -->
-                <article data-category="corporate" class="case-card ambient-card rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="h-56 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Корпоратив в стиле кинематографа" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x500/121214/800020?text=Corporate+Gala'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-burgundy text-white">За 4 недели</span>
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-obsidian/80 backdrop-blur-md text-gray-200 border border-white/10">240 сотрудников</span>
-                            </div>
-                            <span class="absolute bottom-3 left-4 text-xs text-rose-200 font-medium">Лофт на Петроградской стороне</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">Иммерсивный юбилей девелоперской компании</h3>
-                            <div class="space-y-2.5 text-xs sm:text-sm text-muted">
-                                <p><strong class="text-white">Задача:</strong> Уйти от скучных тостов руководства и вовлечь сотрудников разных возрастов и отделов.</p>
-                                <p><strong class="text-white">Решение:</strong> Создали театрализованный вечер с актёрами петербургских театров, где главными героями стали сами сотрудники компании.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-muted">
-                        <span>Бюджет: 3.1 млн ₽</span>
-                        <span class="text-burgundy-glow font-medium">Корпоративное событие</span>
-                    </div>
-                </article>
-
-                <!-- Case 4: Wedding Bay -->
-                <article data-category="wedding" class="case-card ambient-card rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="h-56 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Свадьба на берегу Финского залива" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x500/121214/800020?text=Gulf+of+Finland+Wedding'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-burgundy text-white">Подготовка: 2 мес</span>
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-obsidian/80 backdrop-blur-md text-gray-200 border border-white/10">90 гостей</span>
-                            </div>
-                            <span class="absolute bottom-3 left-4 text-xs text-rose-200 font-medium">Репино, берег Финского залива</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">Двухдневная свадьба в соснах с выездной церемонией на пляже</h3>
-                            <div class="space-y-2.5 text-xs sm:text-sm text-muted">
-                                <p><strong class="text-white">Задача:</strong> Провести церемонию у воды при переменчивом ветре и расселить 90 гостей из трёх стран.</p>
-                                <p><strong class="text-white">Решение:</strong> Возвели прозрачный купольный шатёр с климат-контролем и организовали персональный трансфер для каждого гостя.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-muted">
-                        <span>Бюджет: 3.4 млн ₽</span>
-                        <span class="text-burgundy-glow font-medium">Загородная свадьба</span>
-                    </div>
-                </article>
-
-                <!-- Case 5: Festival -->
-                <article data-category="forum" class="case-card ambient-card rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="h-56 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Городской гастро-музыкальный фестиваль" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x500/121214/800020?text=Summer+Festival'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-burgundy text-white">Подготовка: 3 мес</span>
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-obsidian/80 backdrop-blur-md text-gray-200 border border-white/10">4 500 гостей</span>
-                            </div>
-                            <span class="absolute bottom-3 left-4 text-xs text-rose-200 font-medium">Культурный квартал Брусницын</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">Летний бренд-фестиваль у моря с двумя сценами</h3>
-                            <div class="space-y-2.5 text-xs sm:text-sm text-muted">
-                                <p><strong class="text-white">Задача:</strong> Собрать на одной территории 18 корнеров, две музыкальные сцены и арт-объекты без заторов и очередей.</p>
-                                <p><strong class="text-white">Решение:</strong> Продумали круговую логистику потоков, согласовали безопасность и вывели 35 координаторов Derzko с рациями.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-muted">
-                        <span>Бюджет: 9.2 млн ₽</span>
-                        <span class="text-burgundy-glow font-medium">Масштабный фестиваль</span>
-                    </div>
-                </article>
-
-                <!-- Case 6: Regatta Corporate -->
-                <article data-category="corporate" class="case-card ambient-card rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="h-56 relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Корпоративная парусная регата" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x500/121214/800020?text=Yacht+Regatta+SPb'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-burgundy text-white">За 18 дней</span>
-                                <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-obsidian/80 backdrop-blur-md text-gray-200 border border-white/10">110 участников</span>
-                            </div>
-                            <span class="absolute bottom-3 left-4 text-xs text-rose-200 font-medium">Яхт-клуб, Крестовский остров</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-3">Парусная регата для топ-менеджмента и вечерний гала-ужин</h3>
-                            <div class="space-y-2.5 text-xs sm:text-sm text-muted">
-                                <p><strong class="text-white">Задача:</strong> Сплотить руководителей филиалов в динамичном петербургском формате с высокой безопасностью на воде.</p>
-                                <p><strong class="text-white">Решение:</strong> Подготовили флот из 15 парусных яхт с профессиональными шкиперами, брендировали экипировку и завершили вечер ужином на пирсе.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-5 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-muted">
-                        <span>Бюджет: 2.3 млн ₽</span>
-                        <span class="text-burgundy-glow font-medium">Тимбилдинг & Гала</span>
-                    </div>
-                </article>
-
-            </div>
-
-            <!-- Bottom Portfolio CTA -->
-            <div class="mt-12 text-center">
-                <a href="#contact" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white/[0.04] hover:bg-burgundy border border-burgundy-glow/50 text-white font-semibold text-base transition-all shadow-burgundy-subtle">
-                    <span>Хочу так же — обсудить мою задачу</span>
-                    <i data-lucide="sparkles" class="w-5 h-5 text-burgundy-glow"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= BLOCK 5: 5-STEP PROCESS TIMELINE (#process) ================= -->
-    <section id="process" class="py-20 md:py-28 bg-surface/40 border-y border-white/5">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-semibold uppercase tracking-widest text-burgundy-glow block mb-3">Понятный процесс по дням</span>
-                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-                    От первой встречи до финальных объятий — 5 спокойных шагов
-                </h2>
-                <p class="text-muted text-base sm:text-lg">
-                    Мы забираем на себя сотни звонков, таблиц и согласований. Вам остаётся только приятная часть — выбирать то, что откликается:
-                </p>
-            </div>
-
-            <!-- Vertical Timeline -->
-            <div class="relative border-l-2 border-burgundy/40 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-10">
-                
-                <!-- Step 01 -->
-                <div class="relative group">
-                    <div class="absolute -left-[37px] sm:-left-[53px] top-0 w-9 h-9 rounded-xl bg-burgundy border-2 border-burgundy-glow text-white text-xs font-bold flex items-center justify-center shadow-burgundy-glow">
-                        01
-                    </div>
-                    <div class="ambient-card p-6 sm:p-7 rounded-2xl border border-white/10">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <h3 class="text-xl font-bold text-white">Знакомство и чашка кофе</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">День 1</span>
-                        </div>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed">
-                            Встречаемся в нашем офисе в центре Петербурга или созваниваемся онлайн. Бережно расспрашиваем о ваших мечтах и опасениях, не грузим сложной терминологией и сразу называем реальные вилки цен.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 02 -->
-                <div class="relative group">
-                    <div class="absolute -left-[37px] sm:-left-[53px] top-0 w-9 h-9 rounded-xl bg-surfaceLight border-2 border-burgundy-glow text-white text-xs font-bold flex items-center justify-center group-hover:bg-burgundy transition-colors">
-                        02
-                    </div>
-                    <div class="ambient-card p-6 sm:p-7 rounded-2xl border border-white/10">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <h3 class="text-xl font-bold text-white">Концепция, локации и открытая смета</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">День 2–3</span>
-                        </div>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed">
-                            Присылаем презентацию идеи, список проверенных свободных площадок под вашу дату и детальную таблицу расходов. Фиксируем сроки каждого этапа и финальный бюджет в договоре.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 03 -->
-                <div class="relative group">
-                    <div class="absolute -left-[37px] sm:-left-[53px] top-0 w-9 h-9 rounded-xl bg-surfaceLight border-2 border-burgundy-glow text-white text-xs font-bold flex items-center justify-center group-hover:bg-burgundy transition-colors">
-                        03
-                    </div>
-                    <div class="ambient-card p-6 sm:p-7 rounded-2xl border border-white/10">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <h3 class="text-xl font-bold text-white">Сборка проверенной команды</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">День 4–10</span>
-                        </div>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed">
-                            Подключаем лучших ведущих, декораторов, техников и кейтеринг Петербурга, с которыми мы прошли десятки проектов. Никаких случайных людей — только профи с опытом от 5 лет.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 04 -->
-                <div class="relative group">
-                    <div class="absolute -left-[37px] sm:-left-[53px] top-0 w-9 h-9 rounded-xl bg-surfaceLight border-2 border-burgundy-glow text-white text-xs font-bold flex items-center justify-center group-hover:bg-burgundy transition-colors">
-                        04
-                    </div>
-                    <div class="ambient-card p-6 sm:p-7 rounded-2xl border border-white/10">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <h3 class="text-xl font-bold text-white">Спокойная подготовка в одном чате</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-burgundy/25 text-rose-200 border border-burgundy-glow/30">Весь период</span>
-                        </div>
-                        <p class="text-muted text-sm sm:text-base leading-relaxed">
-                            Создаём удобный чат в Telegram и даём доступ к живому графику готовности. Вы в любой момент видите статус каждой задачи без лишних звонков и нервов.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 05 -->
-                <div class="relative group">
-                    <div class="absolute -left-[37px] sm:-left-[53px] top-0 w-9 h-9 rounded-xl bg-burgundy border-2 border-white text-white text-xs font-bold flex items-center justify-center shadow-burgundy-glow">
-                        05
-                    </div>
-                    <div class="ambient-card p-6 sm:p-7 rounded-2xl border border-burgundy-glow/50 bg-gradient-to-r from-burgundy/15 to-surface">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <h3 class="text-xl font-bold text-white">День вашего события</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-burgundy text-white">Точно по таймингу</span>
-                        </div>
-                        <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
-                            Команда <strong class="text-white">Derzko</strong> на площадке за 6 часов до старта: контролируем монтаж, кухню, свет, звук и встречу каждого гостя. Вы отдыхаете, принимаете комплименты и проживаете этот день на 100%.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= BLOCK 6: TRUST, GUARANTEES & TELEGRAM REVIEWS (#trust) ================= -->
-    <section id="trust" class="py-20 md:py-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mb-14">
-                <span class="text-xs font-semibold uppercase tracking-widest text-burgundy-glow block mb-3">Команда и репутация</span>
-                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-                    Почему с Derzko спокойно на любом масштабе
-                </h2>
-                <p class="text-muted text-base sm:text-lg">
-                    У события нет дубля — оно должно пройти безупречно с первого раза. За каждым проектом стоят конкретные люди и юридические гарантии.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Left Column: Founder Word + 3 Guarantee Cards (6 cols) -->
-                <div class="lg:col-span-6 space-y-6">
-                    <!-- Founder Quote Card -->
-                    <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-surfaceLight to-obsidian border border-white/10 relative overflow-hidden">
-                        <div class="flex items-center gap-4 mb-5">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=240&q=80" 
-                                 alt="Основатель агентства Derzko" 
-                                 class="w-16 h-16 rounded-2xl object-cover border-2 border-burgundy-glow"
-                                 onerror="this.src='https://placehold.co/150x150/800020/FFFFFF?text=DERZKO'">
-                            <div>
-                                <h3 class="text-lg font-bold text-white">Алина Соколова</h3>
-                                <p class="text-xs text-burgundy-glow font-medium">Основатель и генеральный продюсер DERZKO</p>
-                            </div>
-                        </div>
-                        <blockquote class="text-gray-200 text-sm sm:text-base italic font-serif text-lg leading-relaxed mb-4">
-                            «Мы назвали агентство Derzko, потому что не боимся сложных таймингов, нестандартных площадок Петербурга и масштабных задач. Но внутри команды главное правило — абсолютная бережность к клиенту. Вы никогда не услышите от нас "это невозможно" — мы просто предложим три варианта, как сделать это красиво и вовремя».
-                        </blockquote>
-                    </div>
-
-                    <!-- 3 Ironclad Rules -->
-                    <div class="grid grid-cols-1 gap-4">
-                        <div class="p-5 rounded-2xl bg-surface border border-white/10 flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-burgundy/25 text-burgundy-glow flex items-center justify-center shrink-0">
-                                <i data-lucide="shield-check" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-base font-bold text-white mb-1">Официальный договор с SLA</h4>
-                                <p class="text-xs sm:text-sm text-muted">Прописываем сроки сдачи каждого этапа и несём финансовую ответственность за соблюдение сметы и тайминга.</p>
-                            </div>
-                        </div>
-
-                        <div class="p-5 rounded-2xl bg-surface border border-white/10 flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-burgundy/25 text-burgundy-glow flex items-center justify-center shrink-0">
-                                <i data-lucide="users" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-base font-bold text-white mb-1">Личная вовлечённость 24/7</h4>
-                                <p class="text-xs sm:text-sm text-muted">С вами работает персональный продюсер проекта, который всегда на связи и решает вопросы до того, как вы о них подумаете.</p>
-                            </div>
-                        </div>
-
-                        <div class="p-5 rounded-2xl bg-surface border border-white/10 flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-burgundy/25 text-burgundy-glow flex items-center justify-center shrink-0">
-                                <i data-lucide="award" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-base font-bold text-white mb-1">Закрытый пул подрядчиков СПб</h4>
-                                <p class="text-xs sm:text-sm text-muted">Никаких экспериментов на вашем событии — привлекаем только тех технических специалистов и артистов, в ком уверены лично.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Live Telegram Messages Style Reviews (6 cols) -->
-                <div class="lg:col-span-6 rounded-3xl bg-surface border border-white/10 p-6 sm:p-8">
-                    <div class="flex items-center justify-between pb-5 mb-6 border-b border-white/10">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-full bg-burgundy/30 border border-burgundy-glow flex items-center justify-center text-white">
-                                <i data-lucide="message-circle-heart" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-base font-bold text-white">Живые сообщения в чатах проектов</h3>
-                                <p class="text-xs text-muted">Что пишут клиенты на следующее утро после события</p>
-                            </div>
-                        </div>
-                        <span class="text-xs text-burgundy-glow font-medium">Telegram</span>
-                    </div>
-
-                    <div class="space-y-4">
-                        <!-- Telegram Bubble 1 -->
-                        <div class="p-4 rounded-2xl rounded-tl-sm bg-obsidian border border-white/10">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-xs font-bold text-rose-300">Екатерина и Марк • Свадьба в Репино</span>
-                                <span class="text-[11px] text-muted">11:42</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
-                                «Ребята, мы только проснулись и до сих пор мурашки! 😭 Спасибо вам за то, что вчера мы вообще не думали ни о тайминге, ни о внезапном дожде у залива. Когда за 10 минут до церемонии вы развернули прозрачные зонты и тёплые пледы для всех 70 гостей — это был высший пилотаж. Родители в восторге!»
-                            </p>
-                        </div>
-
-                        <!-- Telegram Bubble 2 -->
-                        <div class="p-4 rounded-2xl rounded-tl-sm bg-obsidian border border-white/10">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-xs font-bold text-rose-300">Денис К., HRD IT-компании (280 чел.)</span>
-                                <span class="text-[11px] text-muted">14:15</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
-                                «Коллеги из Derzko, жму руку всей команде! Первый раз за 5 лет вижу настолько прозрачную смету без внезапных доплат в конце. Отдельный респект за быструю работу по ЭДО и закрывающим документам — наша бухгалтерия счастлива не меньше, чем разработчики после вечеринки».
-                            </p>
-                        </div>
-
-                        <!-- Telegram Bubble 3 -->
-                        <div class="p-4 rounded-2xl rounded-tl-sm bg-obsidian border border-white/10">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-xs font-bold text-rose-300">Ольга В., Директор деловой программы форума</span>
-                                <span class="text-[11px] text-muted">18:09</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
-                                «Застроить зал на 800 человек за одну ночь и провести регистрацию без единой очереди на входе — это мощь. Спикеры отдельно отметили работу звукорежиссёров и координаторов бэкстейджа. В следующем году делаем форум только с вами!»
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= BLOCK 7: FRICTIONLESS 2-CLICK CONTACT (#contact) ================= -->
-    <section id="contact" class="py-20 md:py-28 relative overflow-hidden">
-        <!-- Radial Burgundy Glow Behind Card -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-burgundy/25 rounded-full blur-[160px] pointer-events-none"></div>
-
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="rounded-3xl bg-surface/95 backdrop-blur-2xl border border-burgundy-glow/50 p-7 sm:p-12 shadow-burgundy-glow">
-                
-                <div class="text-center max-w-2xl mx-auto mb-9">
-                    <span class="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-burgundy/30 text-rose-200 border border-burgundy-glow/40 mb-4">
-                        Ответ в течение 15 минут
-                    </span>
-                    <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-                        Расскажите нам о поводе — остальное мы возьмём на себя
-                    </h2>
-                    <p class="text-muted text-sm sm:text-base leading-relaxed">
-                        Не нужно заполнять длинные брифы и знать точное количество гостей прямо сейчас. Оставьте контакт — мы бережно зададим нужные вопросы и составим план действий.
-                    </p>
-                </div>
-
-                <!-- Minimalist 2-Field Form -->
-                <form id="mainContactForm" class="space-y-6 max-w-xl mx-auto">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="clientName" class="block text-xs font-medium text-gray-300 mb-2">Как к вам обращаться?</label>
-                            <input type="text" id="clientName" required placeholder="Ваше имя" 
-                                   class="w-full px-4 py-4 rounded-xl bg-obsidian border border-white/15 text-white placeholder-muted text-sm focus:outline-none focus:border-burgundy-glow transition-colors">
-                        </div>
-                        <div>
-                            <label for="clientContact" class="block text-xs font-medium text-gray-300 mb-2">Телефон или @ник в Telegram</label>
-                            <input type="text" id="clientContact" required placeholder="+7 (999) ... или @username" 
-                                   class="w-full px-4 py-4 rounded-xl bg-obsidian border border-white/15 text-white placeholder-muted text-sm focus:outline-none focus:border-burgundy-glow transition-colors">
-                        </div>
-                    </div>
-
-                    <!-- 1-Click Communication Preference Chips -->
-                    <div>
-                        <span class="block text-xs font-medium text-muted mb-2.5">Как вам комфортнее связаться?</span>
-                        <div class="grid grid-cols-3 gap-2.5" id="commChips">
-                            <button type="button" data-pref="Telegram" class="comm-chip active py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium border border-burgundy-glow bg-burgundy/30 text-white transition-all flex items-center justify-center gap-1.5">
-                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                                <span>В Telegram</span>
-                            </button>
-                            <button type="button" data-pref="WhatsApp" class="comm-chip py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium border border-white/10 bg-obsidian text-muted hover:text-white transition-all flex items-center justify-center gap-1.5">
-                                <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-                                <span>В WhatsApp</span>
-                            </button>
-                            <button type="button" data-pref="Позвонить" class="comm-chip py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium border border-white/10 bg-obsidian text-muted hover:text-white transition-all flex items-center justify-center gap-1.5">
-                                <i data-lucide="phone" class="w-3.5 h-3.5"></i>
-                                <span>Позвонить</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Primary Submit Button -->
-                    <button type="submit" class="w-full py-4 px-8 rounded-2xl bg-burgundy hover:bg-burgundy-hover text-white font-bold text-base shadow-burgundy-glow transition-all flex items-center justify-center gap-2.5">
-                        <span>Обсудить мероприятие с Derzko</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-                    </button>
-
-                    <!-- Direct Telegram Alternative -->
-                    <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted">
-                        <span>Не любите оставлять заявки на сайтах?</span>
-                        <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-white hover:text-burgundy-glow font-semibold transition-colors">
-                            <span>Напишите руководителю напрямую в Telegram →</span>
-                        </a>
-                    </div>
-                </form>
-
-                <!-- Thank You State (Hidden by default) -->
-                <div id="mainThankYouState" class="hidden text-center py-8 max-w-lg mx-auto">
-                    <div class="w-16 h-16 rounded-2xl bg-burgundy/30 border border-burgundy-glow text-burgundy-glow flex items-center justify-center mx-auto mb-5">
-                        <i data-lucide="heart-handshake" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Спасибо за доверие!</h3>
-                    <p class="text-muted text-sm sm:text-base leading-relaxed mb-6">
-                        Мы уже получили ваш контакт. Ведущий продюсер <strong class="text-white">Derzko</strong> изучает ваш запрос и бережно свяжется с вами в течение 15 минут.
-                    </p>
-                    <button type="button" onclick="resetContactForm()" class="px-6 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-gray-300">
-                        Отправить ещё один запрос
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="bg-obsidian border-t border-white/10 py-14 text-sm text-muted">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/10">
-                <!-- Col 1: Brand -->
-                <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="text-2xl font-extrabold tracking-widest text-white">DERZKO</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] bg-burgundy/30 text-rose-200 border border-burgundy-glow/30">СПб</span>
-                    </div>
-                    <p class="text-xs sm:text-sm text-muted leading-relaxed max-w-xs mb-4">
-                        Организация свадеб, корпоративов, деловых форумов и фестивалей под ключ в Санкт-Петербурге и Ленинградской области.
-                    </p>
-                    <p class="text-xs text-gray-500">© 2026 Event-агентство DERZKO. Все права защищены.</p>
-                </div>
-
-                <!-- Col 2: Quick Navigation -->
-                <div>
-                    <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-wider">Навигация</h4>
-                    <ul class="grid grid-cols-2 gap-2.5 text-xs sm:text-sm">
-                        <li><a href="#formats" class="hover:text-white transition-colors">Свадьбы</a></li>
-                        <li><a href="#formats" class="hover:text-white transition-colors">Корпоративы</a></li>
-                        <li><a href="#formats" class="hover:text-white transition-colors">Деловые форумы</a></li>
-                        <li><a href="#formats" class="hover:text-white transition-colors">Фестивали</a></li>
-                        <li><a href="#calculator" class="hover:text-white transition-colors">Калькулятор сметы</a></li>
-                        <li><a href="#cases" class="hover:text-white transition-colors">Кейсы и цифры</a></li>
-                        <li><a href="#process" class="hover:text-white transition-colors">Этапы работы</a></li>
-                        <li><a href="#trust" class="hover:text-white transition-colors">О команде</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 3: Contacts & Legal Requisites -->
-                <div>
-                    <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-wider">Контакты в Санкт-Петербурге</h4>
-                    <div class="space-y-2 text-xs sm:text-sm">
-                        <p class="text-white font-semibold text-base">+7 (812) 604-88-20</p>
-                        <p>г. Санкт-Петербург, Петроградская наб., 18 (встречи по предварительной записи)</p>
-                        <p class="pt-2 text-[11px] text-gray-500">
-                            ООО «ДЕРЗКО ИВЕНТ» • ИНН 7813654910 • ОГРН 1237800045120 • Работаем по договору и ЭДО
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-                <span>Сделано с любовью к петербургским событиям</span>
-                <a href="#top" class="hover:text-white transition-colors">Наверх ↑</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ================= INTERACTIVE JAVASCRIPT ================= -->
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        });
-
-        // Calculator State & Data Configuration
-        const calcState = {
-            type: 'wedding',
-            guests: 80,
-            time: 'normal'
-        };
-
-        const eventConfig = {
-            wedding: {
-                basePerGuest: 16500,
-                minBudget: 950000,
-                breakdown: { venue: 45, tech: 25, program: 20, agency: 10 },
-                venueNote: '5 свободных особняков или загородных площадок у залива'
-            },
-            corporate: {
-                basePerGuest: 14000,
-                minBudget: 850000,
-                breakdown: { venue: 42, tech: 23, program: 25, agency: 10 },
-                venueNote: '5 концептуальных площадок СПб с расчётом по ЭДО'
-            },
-            forum: {
-                basePerGuest: 11500,
-                minBudget: 1600000,
-                breakdown: { venue: 35, tech: 40, program: 15, agency: 10 },
-                venueNote: 'подходящие конференц-залы и технический райдер застройки'
-            },
-            festival: {
-                basePerGuest: 8500,
-                minBudget: 2900000,
-                breakdown: { venue: 30, tech: 42, program: 18, agency: 10 },
-                venueNote: 'открытые локации (Севкабель / Брусницын) и план безопасности'
-            }
-        };
-
-        function formatRubles(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= ПОДВАЛ (FOOTER) ================= -->
+  <footer class="py-8 px-4 sm:px-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+    <div class="flex items-center gap-3">
+      <span class="font-bold tracking-[0.2em] text-white uppercase">DERZKO</span>
+      <span>•</span>
+      <span>Event-агентство полного цикла в Санкт-Петербурге</span>
+    </div>
+    <div>
+      © 2026 DERZKO Event Agency. Все права защищены. Работаем по договору и ЭДО.
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="#top" class="hover:text-white transition">Наверх ↑</a>
+    </div>
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT: ЛОГИКА КАЛЬКУЛЯТОРА, ФИЛЬТРОВ И ОТЗЫВОВ ================= -->
+  <script>
+    let currentFormat = 'wedding';
+    let currentUrgency = 'normal';
+
+    const formatData = {
+      wedding: {
+        base: 950000,
+        perGuest: 11000,
+        team: '4 координаторов во главе с персональным свадебным продюсером',
+        loc: 'свободные особняки, панорамные крыши и загородные площадки в Репино'
+      },
+      corp: {
+        base: 750000,
+        perGuest: 9500,
+        team: '5 специалистов (режиссёр, технический директор и координаторы)',
+        loc: 'лучшие лофты, теплоходы и загородные клубы СПб и ЛО'
+      },
+      forum: {
+        base: 1400000,
+        perGuest: 7500,
+        team: '6 профильных специалистов (технический продакшн, аккредитация, спикер-менеджмент)',
+        loc: 'конференц-залы, экспо-площадки и конгресс-отели Петербурга'
+      },
+      fest: {
+        base: 2400000,
+        perGuest: 4500,
+        team: '8+ специалистов (главный режиссёр, служба безопасности, застройка и логистика)',
+        loc: 'открытые пространства у залива, парки и креативные кластеры СПб'
+      }
+    };
+
+    function selectFormatAndScroll(format) {
+      setCalcFormat(format);
+      document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function setCalcFormat(format) {
+      currentFormat = format;
+      document.querySelectorAll('.calc-tab').forEach(btn => {
+        if (btn.dataset.format === format) {
+          btn.className = 'calc-tab active bg-burgundy text-white border border-burgundyLight py-3 px-3 rounded-xl text-xs font-semibold transition';
+        } else {
+          btn.className = 'calc-tab bg-obsidian text-white/75 border border-white/10 hover:border-white/30 py-3 px-3 rounded-xl text-xs font-semibold transition';
         }
+      });
+      updateCalculator();
+    }
 
-        function updateCalculatorUI() {
-            const cfg = eventConfig[calcState.type];
-            const guests = parseInt(calcState.guests, 10);
-
-            // Calculate estimated budget
-            let rawBudget = Math.max(cfg.minBudget, guests * cfg.basePerGuest);
-            if (calcState.time === 'urgent') rawBudget = Math.round(rawBudget * 1.1);
-            // Round to nearest 50k
-            const roundedBudget = Math.round(rawBudget / 50000) * 50000;
-
-            // Update Guest Display
-            document.getElementById('guestCountDisplay').textContent = `${guests} гостей`;
-
-            // Update Budget Output
-            document.getElementById('calcBudgetOutput').textContent = `от ${formatRubles(roundedBudget)} ₽`;
-
-            // Update Coordinator Team Size
-            const coords = Math.max(3, Math.min(25, Math.ceil(guests / 35) + 2));
-            document.getElementById('calcTeamBadge').textContent = `Команда: 1 продюсер + ${coords} координаторов`;
-
-            // Update Dynamic Summary Text
-            const hoursText = calcState.time === 'urgent' ? '24 часов' : '48 часов';
-            document.getElementById('calcSummaryText').innerHTML = 
-                `Для такого масштаба мы подберём ${cfg.venueNote} в течение <strong class="text-white">${hoursText}</strong>, а детальную открытую смету в 3 вариантах бюджета вы получите уже <strong class="text-white">завтра</strong>.`;
-
-            // Update Donut Chart & Percentages
-            const { venue, tech, program, agency } = cfg.breakdown;
-            document.getElementById('pctVenue').textContent = `${venue}%`;
-            document.getElementById('pctTech').textContent = `${tech}%`;
-            document.getElementById('pctProgram').textContent = `${program}%`;
-
-            const segVenue = document.getElementById('segVenue');
-            const segTech = document.getElementById('segTech');
-            const segProgram = document.getElementById('segProgram');
-            const segAgency = document.getElementById('segAgency');
-
-            segVenue.setAttribute('stroke-dasharray', `${venue} ${100 - venue}`);
-            segVenue.setAttribute('stroke-dashoffset', '0');
-
-            segTech.setAttribute('stroke-dasharray', `${tech} ${100 - tech}`);
-            segTech.setAttribute('stroke-dashoffset', `-${venue}`);
-
-            segProgram.setAttribute('stroke-dasharray', `${program} ${100 - program}`);
-            segProgram.setAttribute('stroke-dashoffset', `-${venue + tech}`);
-
-            segAgency.setAttribute('stroke-dasharray', `${agency} ${100 - agency}`);
-            segAgency.setAttribute('stroke-dashoffset', `-${venue + tech + program}`);
+    function setCalcUrgency(urgency) {
+      currentUrgency = urgency;
+      document.querySelectorAll('.urg-tab').forEach(btn => {
+        if (btn.dataset.urgency === urgency) {
+          btn.className = 'urg-tab active bg-burgundy text-white border border-burgundyLight py-3 px-3 rounded-xl text-xs font-medium transition';
+        } else {
+          btn.className = 'urg-tab bg-obsidian text-white/75 border border-white/10 hover:border-white/30 py-3 px-3 rounded-xl text-xs font-medium transition';
         }
+      });
+      updateCalculator();
+    }
 
-        // Event Format Tabs in Calculator
-        document.querySelectorAll('.calc-type-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.calc-type-btn').forEach(b => {
-                    b.className = 'calc-type-btn py-3 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all';
-                });
-                btn.className = 'calc-type-btn active py-3 px-3 rounded-xl text-sm font-medium border border-burgundy-glow bg-burgundy text-white transition-all';
-                calcState.type = btn.dataset.type;
-                updateCalculatorUI();
-            });
-        });
+    function updateCalculator() {
+      const guests = parseInt(document.getElementById('guests-range').value, 10);
+      document.getElementById('guests-val').textContent = guests + ' гостей';
 
-        // Guest Slider Listener
-        document.getElementById('guestRange').addEventListener('input', (e) => {
-            calcState.guests = e.target.value;
-            updateCalculatorUI();
-        });
+      const info = formatData[currentFormat];
+      let total = info.base + (guests * info.perGuest);
+      if (currentUrgency === 'urgent') total *= 1.1;
 
-        // Timeframe Tabs Listener
-        document.querySelectorAll('.calc-time-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.calc-time-btn').forEach(b => {
-                    b.className = 'calc-time-btn py-3 px-4 rounded-xl text-sm font-medium border border-white/10 bg-white/[0.03] text-muted hover:text-white transition-all';
-                });
-                btn.className = 'calc-time-btn active py-3 px-4 rounded-xl text-sm font-medium border border-burgundy-glow bg-burgundy text-white transition-all';
-                calcState.time = btn.dataset.time;
-                updateCalculatorUI();
-            });
-        });
+      const millions = (total / 1000000).toFixed(1);
+      document.getElementById('calc-budget').textContent = `от ${millions} млн ₽`;
 
-        // Helper called from Bento Cards (#formats -> #calculator)
-        window.selectFormatAndScroll = function(formatType) {
-            const targetBtn = document.querySelector(`.calc-type-btn[data-type="${formatType}"]`);
-            if (targetBtn) targetBtn.click();
-            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
-        };
+      const timeText = currentUrgency === 'urgent' ? 'уже сегодня за 12 часов' : 'за 48 часов';
+      document.getElementById('calc-team-desc').innerHTML = 
+        `Подключим команду из <strong class="text-white">${info.team}</strong>. Подберём ${info.loc} <strong class="text-white">${timeText}</strong>.`;
+    }
 
-        // Expand Inline Capture in Calculator
-        const openCalcCaptureBtn = document.getElementById('openCalcCaptureBtn');
-        const calcInlineForm = document.getElementById('calcInlineForm');
-        const calcSuccessMsg = document.getElementById('calcSuccessMsg');
+    function submitCalcQuick(e) {
+      e.preventDefault();
+      document.getElementById('calc-success').classList.remove('hidden');
+      e.target.reset();
+    }
 
-        openCalcCaptureBtn.addEventListener('click', () => {
-            openCalcCaptureBtn.classList.add('hidden');
-            calcInlineForm.classList.remove('hidden');
-            document.getElementById('calcContactInput').focus();
-        });
+    function submitFinalForm(e) {
+      e.preventDefault();
+      document.getElementById('final-success').classList.remove('hidden');
+      e.target.reset();
+    }
 
-        calcInlineForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            calcInlineForm.classList.add('hidden');
-            calcSuccessMsg.classList.remove('hidden');
-        });
+    // Фильтрация портфолио
+    function filterCases(cat) {
+      document.querySelectorAll('.case-filter').forEach(btn => {
+        if (btn.dataset.filter === cat) {
+          btn.className = 'case-filter bg-white text-black px-4 py-2 rounded-full text-xs font-semibold transition';
+        } else {
+          btn.className = 'case-filter bg-card text-white/75 border border-white/10 hover:border-white/30 px-4 py-2 rounded-full text-xs font-medium transition';
+        }
+      });
 
-        // Portfolio Case Filtering
-        document.querySelectorAll('.case-filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.dataset.filter;
-                document.querySelectorAll('.case-filter-btn').forEach(b => {
-                    b.className = 'case-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-white/5 text-muted hover:text-white border border-white/10 transition-all';
-                });
-                btn.className = 'case-filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-burgundy text-white border border-burgundy-glow transition-all';
+      document.querySelectorAll('.case-item').forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
 
-                document.querySelectorAll('.case-card').forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            });
-        });
+    // Слайдер отзывов
+    const reviews = [
+      {
+        text: 'Мы обратились в Derzko за 3 недели до свадьбы, когда другие агентства разводили руками. Ребята за сутки дали честную смету до рубля, нашли закрытый особняк на Неве и провели день так душевно, что мы с мужем просто наслаждались каждой минутой.',
+        author: 'Алина и Марк',
+        role: 'Камерная свадьба в СПб, 65 гостей',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+      },
+      {
+        text: 'Проводили с Derzko ежегодную IT-конференцию и вечернее афтерпати на 400 человек. Ни одной очереди на регистрации, кристальный звук и полный порядок с закрывающими документами по ЭДО. Настоящие профи.',
+        author: 'Екатерина Соколова',
+        role: 'HRD технологической компании',
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80'
+      },
+      {
+        text: 'Впервые видела агентство, которое не пытается раздуть бюджет, а само подсказывает, где сэкономить 300 тысяч без потери картинки. Вся подготовка шла в Telegram по часам — полное спокойствие.',
+        author: 'Дмитрий Воронов',
+        role: 'Юбилей компании в Репино, 120 гостей',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
+      }
+    ];
+    let revIdx = 0;
 
-        // Communication Preference Chips in Final Form
-        document.querySelectorAll('.comm-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                document.querySelectorAll('.comm-chip').forEach(c => {
-                    c.className = 'comm-chip py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium border border-white/10 bg-obsidian text-muted hover:text-white transition-all flex items-center justify-center gap-1.5';
-                });
-                chip.className = 'comm-chip active py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium border border-burgundy-glow bg-burgundy/30 text-white transition-all flex items-center justify-center gap-1.5';
-            });
-        });
-
-        // Main Contact Form Submission
-        const mainContactForm = document.getElementById('mainContactForm');
-        const mainThankYouState = document.getElementById('mainThankYouState');
-
-        mainContactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            mainContactForm.classList.add('hidden');
-            mainThankYouState.classList.remove('hidden');
-        });
-
-        window.resetContactForm = function() {
-            mainContactForm.reset();
-            mainThankYouState.classList.add('hidden');
-            mainContactForm.classList.remove('hidden');
-        };
-
-        // Initial calculation on load
-        updateCalculatorUI();
-    </script>
+    function renderReview() {
+      const r = reviews[revIdx];
+      document.getElementById('review-text').textContent = r.text;
+      document.getElementById('review-author').textContent = r.author;
+      document.getElementById('review-role').textContent = r.role;
+      document.getElementById('review-avatar').src = r.avatar;
+    }
+    function nextReview() {
+      revIdx = (revIdx + 1) % reviews.length;
+      renderReview();
+    }
+    function prevReview() {
+      revIdx = (revIdx - 1 + reviews.length) % reviews.length;
+      renderReview();
+    }
+  </script>
 </body>
 </html>
